@@ -24,20 +24,20 @@ SRC= bcb_crc.c  bmail.c  file_queue.c  headers.c  io.c  main.c \
 	unix_files.c sendfile.c bitsend.c read_config.c qrdr.c bitcat.c \
 	ndparse.c libndparse.c libreceive.c receive.c mailify.c  \
 	mailify.sh clientutils.h sysin.sh version.sh unix_msgs.c \
-	bintree.c __fopen.c sysnerr.c maxlines.c
+	bintree.c nje_fopen.c sysnerr.c maxlines.c
 HDR=consts.h  ebcdic.h  headers.h  site_consts.h unix_msgs.h
 OBJ=file_queue.o headers.o io.o main.o  \
 	nmr.o nmr_unix.o protocol.o read_config.o recv_file.o send.o \
 	send_file.o unix.o unix_brdcst.o unix_build.o gone_server.o \
 	ucp.o unix_mail.o unix_route.o unix_tcp.o util.o \
 	bcb_crc.o bmail.o detach.o unix_files.o sendfile.o bitsend.o \
-	qrdr.o logger.o uread.o bitcat.o unix_msgs.o __fopen.o sysnerr.o maxlines.o
+	qrdr.o logger.o uread.o bitcat.o unix_msgs.o nje_fopen.o sysnerr.o maxlines.o
 OBJmain= main.o  headers.o unix.o file_queue.o read_config.o \
 	io.o nmr.o unix_tcp.o bcb_crc.o unix_route.o \
 	util.o protocol.o send_file.o recv_file.o logger.o \
 	unix_brdcst.o unix_files.o gone_server.o detach.o \
 	libustr.o liblstr.o unix_msgs.o rscsacct.o version.o \
-	nmr_unix.o bintree.o __fopen.o sysnerr.o maxlines.o
+	nmr_unix.o bintree.o nje_fopen.o sysnerr.o maxlines.o
 CLIENTLIBobj=		\
 	clientlib.a(libndparse.o)	clientlib.a(libdondata.o)  \
 	clientlib.a(libetbl.o)		clientlib.a(libsendcmd.o)  \
@@ -48,7 +48,7 @@ CLIENTLIBobj=		\
 	clientlib.a(libhdrtbx.o)	clientlib.a(libndfuncs.o)  \
 	clientlib.a(libustr.o)		clientlib.a(liblstr.o)	   \
 	clientlib.a(logger.o)		clientlib.a(libstrsave.o)  \
-	clientlib.a(__fopen.o)		clientlib.a(libmcuserid.o) \
+	clientlib.a(nje_fopen.o)		clientlib.a(libmcuserid.o) \
 	clientlib.a(sysnerr.o)		clientlib.a(maxlines.o)
 OBJbmail=bmail.o clientlib.a
 OBJsend=send.o clientlib.a
@@ -61,7 +61,7 @@ OBJygone=ygone.o clientlib.a
 OBJacctcat=acctcat.o clientlib.a
 OBJreceive=receive.o libreceive.o clientlib.a
 OBJmailify=mailify.o libreceive.o clientlib.a
-OBJnjeroutes= njeroutes.o bintree.o __fopen.o sysnerr.o
+OBJnjeroutes= njeroutes.o bintree.o nje_fopen.o sysnerr.o
 OBJnamesfilter= namesfilter.o namesparser.o
 PROGRAMS=funetnje receive bmail ${SEND} sendfile njeroutes bitsend \
 	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter
