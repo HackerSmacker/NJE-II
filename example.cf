@@ -1,0 +1,117 @@
+*
+*   Sample config file for NJE-II
+*
+
+* Your local node name.
+NAME		LINUX1
+* An alias for this node.
+ALIAS		DESKTOP4
+* The IP or hostname for your machine. This is required!
+*IPADDRESS	nic.funet.fi
+IPADDRESS	192.168.1.40
+* The NJE spooling directory.
+QUEUE		/var/spool/bitnet
+* IPC through either a file or TCP/IP port
+*CMDMAILBOX	F /var/spool/bitnet/.cmdfifo
+*CMDMAILBOX	S /var/spool/bitnet/.cmdsocket
+CMDMAILBOX	U 127.0.0.1 175
+LOG         /var/log/bitnet.log
+RSCSACCT	/var/log/bitnet.acct
+* The routing table.
+TABLE		/usr/local/funetnje/nje.route
+* Users to send messages to when lines connect and disconnect
+INFORM		MEA@FINFILES
+* File and message exit processing tables.
+FILEEXITS	/usr/local/funetnje/file-exit.cf
+MSGEXITS	/usr/local/funetnje/msg-exit.cf
+DEFFORM		STANDARD
+LLEVEL		2
+* Default NJE router.
+*DEFAULT-ROUTE	FINHUTC
+*DEFAULT-ROUTE	FIGBOX
+
+* This is a link to a VAX/VMS system running JNET.
+LINE 0 FIPORT
+ TYPE		UNIX_TCP
+ BUFSIZE	4096
+ TIMEOUT	3
+ IPPORT		500
+* TCPNAME	fiport.funet.fi
+ TCPNAME	128.214.109.150
+ TCP-SIZE	8192
+ MAX-STREAMS	7
+
+* This is a link to a Linux PC running FunetNJE.
+LINE 1 ALIJKU65
+ TYPE		UNIX_TCP
+ BUFSIZE	1024
+ TIMEOUT	3
+ IPPORT		175
+*TCPNAME	alijku65.edvz.uni-linz.ac.at
+ TCPNAME	140.78.4.34
+* TCP-SIZE	8192
+ TCP-SIZE	3100
+ SLOW-INTERLEAVE
+ MAX-STREAMS	7
+
+* This is also a link to a Linux PC.
+LINE 2 ALIJKU64
+ TYPE		UNIX_TCP
+ BUFSIZE	1024
+ TIMEOUT	3
+ IPPORT		175
+*TCPNAME	alijku64.edvz.uni-linz.ac.at
+ TCPNAME	140.78.3.22
+ TCP-SIZE	8192
+ MAX-STREAMS	7
+
+* This is a link to a VM/SP R5 system running RSCS 3.x.
+LINE 3 FINHUTC
+ TYPE		UNIX_TCP
+ BUFSIZE	1024
+ TIMEOUT	3
+ IPPORT		175
+*TCPNAME	finhutc.hut.fi
+ TCPNAME	130.233.224.4
+ TCP-SIZE	8192
+ SLOW-INTERLEAVE
+ MAX-STREAMS	7
+
+* This is a link to a BSD UNIX system on a VAX running FunetNJE.
+LINE 4 MEA
+ TYPE		UNIX_TCP
+ BUFSIZE	8192
+ TIMEOUT	3
+ IPPORT		175
+ TCPNAME	130.232.1.11
+ TCP-SIZE	8192
+ MAX-STREAMS	7
+
+* This is link to a Convex C3480 running FunetNJE.
+*LINE 5  FINFAN
+* TYPE		UNIX_TCP
+* BUFSIZE	8192
+* TIMEOUT	3
+* IPPORT		175
+* TCPNAME	convex.csc.fi
+* TCP-SIZE	8192
+* MAX-STREAMS	7
+*
+*LINE 6 FINUTU
+*  TYPE		UNIX_TCP
+*  BUFSIZE	1024
+*  TIMEOUT	3
+*  IPPORT	175
+** TCPNAME	castor.utu.fi
+*  TCPNAME	130.232.1.14
+*  TCP-SIZE	8192
+*  MAX-STREAMS	7
+*
+* LINE 7 OJ287
+*   TYPE		UNIX_TCP
+*   BUFSIZE	1024
+*   TIMEOUT	3
+*   IPPORT	175
+*   TCPNAME	oj287.astro.utu.fi
+*   TCP-SIZE	8192
+*   MAX-STREAMS	7
