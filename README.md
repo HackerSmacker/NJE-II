@@ -15,3 +15,8 @@ vi /usr/local/nje/lib/file-exit.cf
 Do the same, but also check the spool path!
 
 If you don't have groups, use Makefile.nogroup.
+
+Note that the `funetnje` executable has been renamed to `njed` to fit UNIX convention.
+
+If you're extremely brave, look in `sendmail_configs` and try to integrate it with
+Sendmail like JNET on VMS.

@@ -18,7 +18,7 @@
 #
 #
 
-CmdHelpFile: /usr/local/lib/huji/cmd-help.txt
+CmdHelpFile: /usr/local/nje/lib/cmd-help.txt
 
 #$TOUSER $TONODE  $FRUSER  $FRNODE  C pattern	 ACTION args
 # Actually TOUSER is not tested on commands, it will be blank anyway..

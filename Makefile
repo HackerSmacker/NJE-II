@@ -9,7 +9,7 @@ CFLAGS= -g -O2 -Wpacked -Wpadded $(CDEFS)
 RANLIB=ranlib
 INSTALL=install
 
-NJEGRP=funetnje
+NJEGRP=nje
 SEND=tell
 PRINT=njeprint
 MANDIR=/usr/local/nje/man
@@ -63,7 +63,7 @@ OBJreceive=receive.o libreceive.o clientlib.a
 OBJmailify=mailify.o libreceive.o clientlib.a
 OBJnjeroutes= njeroutes.o bintree.o nje_fopen.o sysnerr.o
 OBJnamesfilter= namesfilter.o namesparser.o
-PROGRAMS=funetnje receive bmail ${SEND} sendfile njeroutes bitsend \
+PROGRAMS=njed receive bmail ${SEND} sendfile njeroutes bitsend \
 	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter
 ObsoletePROGRAMS= bitcat ndparse
 OTHERFILES=example.cf exampleRt.header unix.install file-exit.cf msg-exit.cf
@@ -72,10 +72,10 @@ MAN1=man/send.1 man/sendfile.1 man/transfer.1 man/ygone.1  \
  man/submit.1 man/print.1 man/punch.1 man/receive.1
 # ObsoleteMAN1= man/bitcat.1 man/ndparse.1
 MAN5=man/bitspool.5 man/ebcdictbl.5
-MAN8=man/funetnje.8 man/qrdr.8 man/njeroutes.8 man/bmail.8 man/ucp.8	\
+MAN8=man/njed.8 man/qrdr.8 man/njeroutes.8 man/bmail.8 man/ucp.8	\
 	man/mailify.8 man/sysin.8
 MANSRCS= man/bitspool.5 man/bmail.8 man/ebcdictbl.5			\
-	man/funetnje.8 man/mailify.8 man/njeroutes.8 man/qrdr.8		\
+	man/njed.8 man/mailify.8 man/njeroutes.8 man/qrdr.8		\
 	man/receive.1 man/send.1 man/sendfile.1 man/ucp.8		\
 
 
@@ -83,9 +83,9 @@ MANSRCS= man/bitspool.5 man/bmail.8 man/ebcdictbl.5			\
 
 all:	$(PROGRAMS)
 
-info:	funetnje.info
-dvi:	funetnje.dvi
-html:	funetnje.html
+info:	njed.info
+dvi:	njed.dvi
+html:	njed.html
 
 .PRECIOUS:	clientlib.a
 
@@ -133,8 +133,8 @@ install:
 	-mkdir ${BINDIR}
 	-mkdir ${MANDIR}
 	-mkdir ${ETCDIR}
-	$(INSTALL) -s -m 755 funetnje ${LIBDIR}/funetnje.x
-	mv ${LIBDIR}/funetnje.x ${LIBDIR}/funetnje
+	$(INSTALL) -s -m 755 njed ${LIBDIR}/njed.x
+	mv ${LIBDIR}/njed.x ${LIBDIR}/njed
 	$(INSTALL) -s -m 755 bitsend ${LIBDIR}
 	$(INSTALL) -s -m 755 qrdr ${LIBDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${ETCDIR}
@@ -163,6 +163,7 @@ install:
 	$(INSTALL) -s -m 755 namesfilter ${LIBDIR}/namesfilter
 	$(INSTALL) -s -g ${NJEGRP} -m 750 mailify ${LIBDIR}/mailify
 	$(INSTALL) -c -g ${NJEGRP} -m 750 sysin.sh ${LIBDIR}/sysin
+	cp cmd-help.txt /usr/local/nje/lib
 	cp example.cf /usr/local/nje/etc/nje.cf
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
@@ -174,7 +175,7 @@ acctcat:	$(OBJacctcat)
 bmail:	$(OBJbmail)
 	$(CC) $(CFLAGS) -o $@ $(OBJbmail) $(LIBS)
 
-funetnje:	$(OBJmain)
+njed:	$(OBJmain)
 	$(CC) $(CFLAGS) -o $@.x $(OBJmain) $(LIBS) $(DEBUG_LIBMALLOC)
 	-mv $@ $2.old
 	mv $@.x $@
@@ -291,22 +292,19 @@ unix_route.o:	unix_route.c consts.h site_consts.h prototypes.h bintree.h
 unix_tcp.o:	unix_tcp.c headers.h consts.h site_consts.h prototypes.h
 util.o:		util.c consts.h site_consts.h ebcdic.h prototypes.h bintree.h
 
-funetnje.info:	funetnje.texinfo
-	makeinfo funetnje.texinfo
+njed.info:	njed.texinfo
+	makeinfo njed.texinfo
 
-funetnje.dvi:	funetnje.texinfo
-	tex funetnje.texinfo
+njed.dvi:	njed.texinfo
+	tex njed.texinfo
 
-funetnje.html:	funetnje.texinfo
-	texi2html funetnje.texinfo
+njed.html:	njed.texinfo
+	texi2html njed.texinfo
 
 lint:	lintlib
 	lint -hc $(CDEFS) llib-lhuji.ln $(SRC)
 
 lintlib:	llib-lhuji.ln
-
-llib-lhuji.ln:	$(SRC)
-	lint -Chuji $(CDEFS) $(SRC)
 
 locktest: locktest.o locks.o
 	$(CC) -o locktest locktest.o locks.o
