@@ -35,7 +35,9 @@
 
 extern struct ENQUIRE Enquire;
 
+#ifndef VMNET_IP_PORT
 #define	VMNET_IP_PORT		175
+#endif
 #define	EXPLICIT_ACK		0
 #define	IMPLICIT_ACK		1
 
