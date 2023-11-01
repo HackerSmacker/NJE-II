@@ -1,0 +1,63 @@
+NJE-II for Linux
+----------------
+
+1. Pull the sourcecode from GitHub to a suitable directory:
+
+  - git clone https://github.com/HackerSmacker/NJE-II
+
+2. Build and install:
+
+  - cd NJE-II
+  - make
+  - groupadd nje
+  - make install
+
+3. Setup config files:
+
+  - Open /usr/local/nje/etc/nje.cf with your favorite editor, configure the following parameters:
+    - NAME (your node name)
+    - Comment out ALIAS with an *
+    - IPADDRESS (your IP or hostname)
+    - QUEUE (the directory to use for your spool queue, /var/spool/bitnet is a good default, create this directory)
+    - INFORM (your UNIX username @ your node NAME (above), i.e. RUSS@MYUNIXNODE)
+    - Setup LINE entries for each remote RSCS node you want to link with, for each entry increase the LINE # by one, starting from 0:
+        For example:
+        LINE 0 VMESASYS
+           TYPE           UNIX_TCP
+           BUFSIZE        1024
+           TIMEOUT        3
+           IPPORT         175
+           TCPNAME        192.168.1.50
+           TCP-SIZE       8192
+           SLOW-INTERLEAVE
+           MAX-STREAMS    7
+
+  - Open /usr/local/nje/lib/msg-exit.cf with your favorite editor, change as follows:
+    - Change ALL occurences of FINFILES with your node NAME from nje.cf.
+
+  - Open /usr/local/nje/lib/file-exit.cf with your favorite editor, change as follows:
+    - Change Spool-Dir to match QUEUE from nje.cf.
+    - Change Postmast-Dir to begin with QUEUE from nje.cf, i.e. /var/spool/bitnet/POSTMAST.
+    - Change ALL occurences of FINFILES with your node NAME from nje.cf.
+
+4. Setup your remote RSCS systems with a TCPNJE entry for this system.
+  - On VM/ESA / z/VM this would look like the following:
+    In RSCS CONFIG:
+      LOCAL VMESA
+      LINKDEFINE nodename TYPE TCPNJE NODE nodename
+      PARM nodename HOST=ip_address LCLPORT=175 RMTPORT=175
+
+    In PROFILE GCS:
+      Add a START for your nodename at the end of the file, after 'RSCS NETWORK START' but before 'exit rc' as follows:
+        'RSCS START nodename'
+
+    Note that these are just the lines you are required to change, not the complete file! There are other lines in there that will be present on some VM systems. Freshly-installed VM systems require you to write a config file from scratch.
+
+    As MAINT:
+      FORCE RSCS
+      XAUTOLOG RSCS
+
+5. On UNIX, start the NJE:
+  - sudo /usr/local/nje/lib/njed
+
+(These directions were written by Russ, the second person to get this installed, thanks!)
