@@ -64,7 +64,7 @@ OBJmailify=mailify.o libreceive.o clientlib.a
 OBJnjeroutes= njeroutes.o bintree.o nje_fopen.o sysnerr.o
 OBJnamesfilter= namesfilter.o namesparser.o
 PROGRAMS=njed receive bmail ${SEND} sendfile njeroutes bitsend \
-	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter
+	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter mailify
 ObsoletePROGRAMS= bitcat ndparse
 OTHERFILES=example.cf exampleRt.header unix.install file-exit.cf msg-exit.cf
 SOURCES=$(SRC) $(HDR) Makefile $(OTHERFILES) $(MAN1) $(MAN8)
@@ -129,42 +129,42 @@ nje.route:	exampleRt.header exampleRt.netinit
 install:
 	@echo "Installing everything."
 	@echo "Must propably be root for this also."
-	-mkdir ${LIBDIR}
+	-mkdir ${BINDIR}
 	-mkdir ${BINDIR}
 	-mkdir ${MANDIR}
 	-mkdir ${ETCDIR}
-	$(INSTALL) -s -m 755 njed ${LIBDIR}/njed.x
-	mv ${LIBDIR}/njed.x ${LIBDIR}/njed
-	$(INSTALL) -s -m 755 bitsend ${LIBDIR}
-	$(INSTALL) -s -m 755 qrdr ${LIBDIR}
+	$(INSTALL) -s -m 755 njed ${BINDIR}/njed.x
+	mv ${BINDIR}/njed.x ${BINDIR}/njed
+	$(INSTALL) -s -m 755 bitsend ${BINDIR}
+	$(INSTALL) -s -m 755 qrdr ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${ETCDIR}
-	$(INSTALL) -s -g ${NJEGRP} -m 755 sendfile ${LIBDIR}
-	rm -f ${LIBDIR}/${PRINT} ${LIBDIR}/submit ${LIBDIR}/punch
-	rm -f ${LIBDIR}/sf ${LIBDIR}/bitprt
-	ln ${LIBDIR}/sendfile ${LIBDIR}/sf
-	ln ${LIBDIR}/sendfile ${LIBDIR}/${PRINT}
-	ln ${LIBDIR}/sendfile ${LIBDIR}/bitprt
-	ln ${LIBDIR}/sendfile ${LIBDIR}/punch
-	ln ${LIBDIR}/sendfile ${LIBDIR}/submit
-	$(INSTALL) -s -g ${NJEGRP} -m 755 tell ${LIBDIR}/${SEND}
+	$(INSTALL) -s -g ${NJEGRP} -m 755 sendfile ${BINDIR}
+	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
+	rm -f ${BINDIR}/sf ${BINDIR}/bitprt
+	ln ${BINDIR}/sendfile ${BINDIR}/sf
+	ln ${BINDIR}/sendfile ${BINDIR}/${PRINT}
+	ln ${BINDIR}/sendfile ${BINDIR}/bitprt
+	ln ${BINDIR}/sendfile ${BINDIR}/punch
+	ln ${BINDIR}/sendfile ${BINDIR}/submit
+	$(INSTALL) -s -g ${NJEGRP} -m 755 tell ${BINDIR}/${SEND}
 	# If you want to call 'send' with command 'tell'
-	# rm -f ${LIBDIR}/tell
-	# ln ${LIBDIR}/${SEND} ${LIBDIR}/tell
-	$(INSTALL) -s -g ${NJEGRP} -m 755 ygone ${LIBDIR}
-	$(INSTALL) -s -g ${NJEGRP} -m 755 receive ${LIBDIR}
-	$(INSTALL) -s -g ${NJEGRP} -m 750 bmail    ${LIBDIR}
+	# rm -f ${BINDIR}/tell
+	# ln ${BINDIR}/${SEND} ${BINDIR}/tell
+	$(INSTALL) -s -g ${NJEGRP} -m 755 ygone ${BINDIR}
+	$(INSTALL) -s -g ${NJEGRP} -m 755 receive ${BINDIR}
+	$(INSTALL) -s -g ${NJEGRP} -m 750 bmail ${BINDIR}
 	-mkdir -p /var/spool/bitnet
 	chgrp ${NJEGRP} /var/spool/bitnet
 	chmod g+w  /var/spool/bitnet
-	chmod g+s ${LIBDIR}/sendfile ${LIBDIR}/tell ${LIBDIR}/ygone \
-		 ${LIBDIR}/bmail
-	$(INSTALL) -s -m 755 transfer ${LIBDIR}/transfer
-	$(INSTALL) -s -m 755 njeroutes ${LIBDIR}/njeroutes
-	$(INSTALL) -s -m 755 namesfilter ${LIBDIR}/namesfilter
-	$(INSTALL) -s -g ${NJEGRP} -m 750 mailify ${LIBDIR}/mailify
-	$(INSTALL) -c -g ${NJEGRP} -m 750 sysin.sh ${LIBDIR}/sysin
-	cp cmd-help.txt /usr/local/nje/lib
-	cp example.cf /usr/local/nje/etc/nje.cf
+	chmod g+s ${BINDIR}/sendfile ${BINDIR}/tell ${BINDIR}/ygone \
+		 ${BINDIR}/bmail
+	$(INSTALL) -s -m 755 transfer ${BINDIR}/transfer
+	$(INSTALL) -s -m 755 njeroutes ${BINDIR}/njeroutes
+	$(INSTALL) -s -m 755 namesfilter ${BINDIR}/namesfilter
+	$(INSTALL) -s -g ${NJEGRP} -m 750 mailify ${BINDIR}/mailify
+	$(INSTALL) -c -g ${NJEGRP} -m 750 sysin.sh ${BINDIR}/sysin
+	cp cmd-help.txt $(LIBDIR)
+	cp example.cf $(ETCDIR)/nje.cf
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf

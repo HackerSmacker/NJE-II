@@ -63,7 +63,7 @@ OBJmailify=mailify.o libreceive.o clientlib.a
 OBJnjeroutes= njeroutes.o bintree.o __fopen.o sysnerr.o
 OBJnamesfilter= namesfilter.o namesparser.o
 PROGRAMS=njed receive bmail ${SEND} sendfile njeroutes bitsend \
-	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter
+	qrdr ygone transfer acctcat ucp $(MAILIFY) namesfilter mailify
 ObsoletePROGRAMS= bitcat ndparse
 OTHERFILES=example.cf exampleRt.header unix.install file-exit.cf msg-exit.cf
 SOURCES=$(SRC) $(HDR) Makefile $(OTHERFILES) $(MAN1) $(MAN8)
