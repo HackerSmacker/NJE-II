@@ -75,12 +75,12 @@ extern int	errno;
 # define GETTIMESEC(x)	(x)
 #endif
 
-
+/* NOTE -- THIS IS OVERRIDED BY THE MAKEFILE!!! */
 #ifndef CONFIG_FILE
-#define	CONFIG_FILE	"/etc/funetnje.cf"
+#define	CONFIG_FILE	"/usr/local/nje/etc/nje.cf"
 #endif
 #ifndef PID_FILE
-#define PID_FILE	"/etc/funetnje.pid"
+#define PID_FILE	"/usr/local/nje/etc/nje.pid"
 #endif
 
 #endif	/* unix */

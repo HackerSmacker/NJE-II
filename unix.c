@@ -212,7 +212,7 @@ init_command_mailbox()
 	  iaddr = inet_addr(socknam);
 	  if (iaddr != 0xFFFFFFFFL)
 	  SocketName.sin_addr.s_addr = iaddr;
-	  portnum = 175;
+	  portnum = VMNET_IP_PORT;
 	  sscanf(socknam,"%*s %d", &portnum);
 	  SocketName.sin_port = htons(portnum);
 

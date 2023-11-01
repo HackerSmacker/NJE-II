@@ -1,38 +1,47 @@
+# NJE-II Makefile.
 
+# Change these settings to what you want!
 CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX \
 	-DUSE_SOCKOPT -DSOCKBUFSIZE=8192 -DUSE_ENUM_TYPES -DDEBUG \
 	-DCONFIG_FILE='"/usr/local/nje/etc/nje.cf"' \
-	-DPID_FILE='"/usr/local/nje/lib/nje.pid"'
+	-DPID_FILE='"/usr/local/nje/lib/nje.pid"' \
+	-DVMNET_IP_PORT=175
+
+# Compiler options:
 CC=gcc
 CPP=gcc -E
 CFLAGS= -g -O2 -Wpacked -Wpadded $(CDEFS)
 RANLIB=ranlib
 INSTALL=install
 
+# chgrp group name:
 NJEGRP=nje
+# Name for the send program (sometimes send is already in use):
 SEND=tell
 PRINT=njeprint
+
+# Install locations.
 MANDIR=/usr/local/nje/man
 LIBDIR=/usr/local/nje/lib
 BINDIR=/usr/local/nje/bin
 ETCDIR=/usr/local/nje/etc
 
-SRC= bcb_crc.c  bmail.c  file_queue.c  headers.c  io.c  main.c \
-	nmr.c  protocol.c  read_config.c  recv_file.c  send.c  \
-	send_file.c  unix.c  unix_brdcst.c  unix_build.c gone_server.c \
-	ucp.c  unix_mail.c  unix_route.c  unix_tcp.c  util.c detach.c \
+SRC= bcb_crc.c bmail.c file_queue.c headers.c io.c main.c \
+	nmr.c protocol.c read_config.c recv_file.c send.c \
+	send_file.c unix.c unix_brdcst.c unix_build.c gone_server.c \
+	ucp.c unix_mail.c unix_route.c unix_tcp.c util.c detach.c \
 	unix_files.c sendfile.c bitsend.c read_config.c qrdr.c bitcat.c \
-	ndparse.c libndparse.c libreceive.c receive.c mailify.c  \
+	ndparse.c libndparse.c libreceive.c receive.c mailify.c \
 	mailify.sh clientutils.h sysin.sh version.sh unix_msgs.c \
 	bintree.c nje_fopen.c sysnerr.c maxlines.c
-HDR=consts.h  ebcdic.h  headers.h  site_consts.h unix_msgs.h
-OBJ=file_queue.o headers.o io.o main.o  \
+HDR=consts.h ebcdic.h headers.h site_consts.h unix_msgs.h
+OBJ=file_queue.o headers.o io.o main.o \
 	nmr.o nmr_unix.o protocol.o read_config.o recv_file.o send.o \
 	send_file.o unix.o unix_brdcst.o unix_build.o gone_server.o \
 	ucp.o unix_mail.o unix_route.o unix_tcp.o util.o \
 	bcb_crc.o bmail.o detach.o unix_files.o sendfile.o bitsend.o \
 	qrdr.o logger.o uread.o bitcat.o unix_msgs.o nje_fopen.o sysnerr.o maxlines.o
-OBJmain= main.o  headers.o unix.o file_queue.o read_config.o \
+OBJmain= main.o headers.o unix.o file_queue.o read_config.o \
 	io.o nmr.o unix_tcp.o bcb_crc.o unix_route.o \
 	util.o protocol.o send_file.o recv_file.o logger.o \
 	unix_brdcst.o unix_files.o gone_server.o detach.o \
@@ -48,7 +57,7 @@ CLIENTLIBobj=		\
 	clientlib.a(libhdrtbx.o)	clientlib.a(libndfuncs.o)  \
 	clientlib.a(libustr.o)		clientlib.a(liblstr.o)	   \
 	clientlib.a(logger.o)		clientlib.a(libstrsave.o)  \
-	clientlib.a(nje_fopen.o)		clientlib.a(libmcuserid.o) \
+	clientlib.a(nje_fopen.o		clientlib.a(libmcuserid.o) \
 	clientlib.a(sysnerr.o)		clientlib.a(maxlines.o)
 OBJbmail=bmail.o clientlib.a
 OBJsend=send.o clientlib.a
@@ -77,9 +86,6 @@ MAN8=man/njed.8 man/qrdr.8 man/njeroutes.8 man/bmail.8 man/ucp.8	\
 MANSRCS= man/bitspool.5 man/bmail.8 man/ebcdictbl.5			\
 	man/njed.8 man/mailify.8 man/njeroutes.8 man/qrdr.8		\
 	man/receive.1 man/send.1 man/sendfile.1 man/ucp.8		\
-
-
-
 
 all:	$(PROGRAMS)
 
@@ -124,7 +130,7 @@ man-ps:
 nje.route:	exampleRt.header exampleRt.netinit
 	@echo "MAKE SURE YOU EDIT THE ROUTING TABLE, AND RERUN $(LIBDIR)/njeroutes!"
 	-rm nje.route*
-	$(LIBDIR)/njeroutes  exampleRt.header exampleRt.netinit nje.route
+	$(LIBDIR)/njeroutes exampleRt.header exampleRt.netinit nje.route
 
 install:
 	@echo "Installing everything."
@@ -237,25 +243,25 @@ io.o:		io.c headers.h consts.h site_consts.h ebcdic.h prototypes.h
 clientlib.a(libasc2ebc.o):	libasc2ebc.c	clientutils.h ebcdic.h
 clientlib.a(libdondata.o):	libdondata.c	clientutils.h ebcdic.h prototypes.h ndlib.h
 clientlib.a(libebc2asc.o):	libebc2asc.c	clientutils.h ebcdic.h
-clientlib.a(libetbl.o):		libetbl.c	ebcdic.h
+clientlib.a(libetbl.o):		libetbl.c		ebcdic.h
 clientlib.a(libexpnhome.o):	libexpnhome.c	clientutils.h
-clientlib.a(libhdrtbx.o):	libhdrtbx.c	clientutils.h prototypes.h
+clientlib.a(libhdrtbx.o):	libhdrtbx.c		clientutils.h prototypes.h
 clientlib.a(libndfuncs.o):	libndfuncs.c	clientutils.h prototypes.h ebcdic.h ndlib.h
 clientlib.a(libndparse.o):	libndparse.c	clientutils.h prototypes.h ebcdic.h ndlib.h
-clientlib.a(libpadbla.o):	libpadbla.c	clientutils.h ebcdic.h
+clientlib.a(libpadbla.o):	libpadbla.c		clientutils.h ebcdic.h
 clientlib.a(libreadcfg.o):	libreadcfg.c	clientutils.h prototypes.h consts.h
 clientlib.a(libsendcmd.o):	libsendcmd.c	clientutils.h prototypes.h consts.h
-clientlib.a(libsubmit.o):	libsubmit.c	clientutils.h prototypes.h
-clientlib.a(liburead.o):	liburead.c	clientutils.h prototypes.h
-clientlib.a(libuwrite.o):	libuwrite.c	clientutils.h prototypes.h
+clientlib.a(libsubmit.o):	libsubmit.c		clientutils.h prototypes.h
+clientlib.a(liburead.o):	liburead.c		clientutils.h prototypes.h
+clientlib.a(libuwrite.o):	libuwrite.c		clientutils.h prototypes.h
 clientlib.a(libstrsave.o):	libstrsave.c	clientutils.h prototypes.h
 clientlib.a(libmcuserid.o):	libmcuserid.c	clientutils.h prototypes.h
 
-clientlib.a(liblstr.o):	liblstr.c	clientutils.h
+clientlib.a(liblstr.o):	liblstr.c clientutils.h
 	$(CC) -c $(CFLAGS) $<
 	ar rc clientlib.a $%
 	$(RANLIB) clientlib.a
-clientlib.a(libustr.o):	libustr.c	clientutils.h
+clientlib.a(libustr.o):	libustr.c clientutils.h
 	$(CC) -c $(CFLAGS) $<
 	ar rc clientlib.a $%
 	$(RANLIB) clientlib.a

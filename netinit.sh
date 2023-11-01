@@ -11,7 +11,7 @@
 #N=-n		# Don't remove the file from the reader
 N=		# Remove the file from the reader
 
-NJEDIR=/l/funetnje	# Where FUNETNJE programs are
+NJEDIR=/usr/local/nje/bin	# Where FUNETNJE programs are
 export N NJEDIR
 nodename=finfiles	# lowercase
 NODENAME=FINFILES	# uppercase

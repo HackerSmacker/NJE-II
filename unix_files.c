@@ -51,7 +51,7 @@ struct FILE_EXIT_CONFIG {
 
 #ifndef	DEF_MAILIFY_PROGRAM /* SITE_CONSTS.H can override */
 # ifdef	UNIX
-#  define DEF_MAILIFY_PROGRAM "/usr/local/funetnje/mailify"
+#  define DEF_MAILIFY_PROGRAM "/usr/local/nje/bin/mailify"
 # else /* for VMS ? */
 #  define DEF_MAILIFY_PROGRAM ???
 # endif
@@ -59,7 +59,7 @@ struct FILE_EXIT_CONFIG {
 
 #ifndef	DEF_SYSIN_PROGRAM /* SITE_CONSTS.H can override */
 # ifdef	UNIX
-#  define DEF_SYSIN_PROGRAM "/usr/local/funetnje/sysin"
+#  define DEF_SYSIN_PROGRAM "/usr/local/nje/bin/sysin"
 # else /* for VMS ? */
 #  define DEF_SYSIN_PROGRAM ???
 # endif
@@ -67,7 +67,7 @@ struct FILE_EXIT_CONFIG {
 
 #ifndef	DEF_TRANSFER_PROGRAM /* SITE_CONSTS.H can override */
 # ifdef	UNIX
-#  define DEF_TRANSFER_PROGRAM "/usr/local/funetnje/transfer"
+#  define DEF_TRANSFER_PROGRAM "/usr/local/nje/bin/transfer"
 # else /* for VMS ? */
 #  define DEF_TRANSFER_PROGRAM ???
 # endif
