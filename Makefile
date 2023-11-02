@@ -128,10 +128,14 @@ install-man:
 man-ps:
 	for X in $(MANSRCS); do groff -man $$X >$$X.ps; done
 
-nje.route:	exampleRt.header exampleRt.netinit
-	@echo "MAKE SURE YOU EDIT THE ROUTING TABLE, AND RERUN $(LIBDIR)/njeroutes!"
+nje.route: exampleRt.header exampleRt.netinit
+	@echo "MAKE SURE YOU EDIT THE ROUTING TABLE, AND RERUN $(BINDIR)/njeroutes!"
 	-rm nje.route*
-	$(LIBDIR)/njeroutes exampleRt.header exampleRt.netinit nje.route
+	$(BINDIR)/njeroutes exampleRt.header exampleRt.netinit nje.route
+
+routeinstall: nje.route
+	@echo "Istalling new routing table. Remember to restart NJE-II after this!"
+	-cp nje.route $(LIBDIR)/nje.route
 
 install:
 	@echo "Installing everything."
@@ -140,11 +144,12 @@ install:
 	-mkdir ${BINDIR}
 	-mkdir ${MANDIR}
 	-mkdir ${ETCDIR}
+	-mkdir ${LIBDIR}
 	$(INSTALL) -s -m 755 njed ${BINDIR}/njed.x
 	mv ${BINDIR}/njed.x ${BINDIR}/njed
 	$(INSTALL) -s -m 755 bitsend ${BINDIR}
 	$(INSTALL) -s -m 755 qrdr ${BINDIR}
-	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${ETCDIR}
+	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 755 sendfile ${BINDIR}
 	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
 	rm -f ${BINDIR}/sf ${BINDIR}/bitprt
@@ -154,6 +159,7 @@ install:
 	ln ${BINDIR}/sendfile ${BINDIR}/punch
 	ln ${BINDIR}/sendfile ${BINDIR}/submit
 	$(INSTALL) -s -g ${NJEGRP} -m 755 tell ${BINDIR}/${SEND}
+	ln ${BINDIR}/tell ${BINDIR}/send
 	# If you want to call 'send' with command 'tell'
 	# rm -f ${BINDIR}/tell
 	# ln ${BINDIR}/${SEND} ${BINDIR}/tell
@@ -175,6 +181,47 @@ install:
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+
+install_bsd:
+	@echo "Installing everything."
+	-mkdir ${BINDIR}
+	-mkdir ${BINDIR}
+	-mkdir ${MANDIR}
+	-mkdir ${ETCDIR}
+	-mkdir ${LIBDIR}
+	$(INSTALL) -s -m 755 njed ${BINDIR}/njed.x
+	mv ${BINDIR}/njed.x ${BINDIR}/njed
+	$(INSTALL) -s -m 755 bitsend ${BINDIR}
+	$(INSTALL) -s -m 755 qrdr ${BINDIR}
+	$(INSTALL) -s -m 750 ucp ${BINDIR}
+	$(INSTALL) -s -m 755 sendfile ${BINDIR}
+	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
+	rm -f ${BINDIR}/sf ${BINDIR}/bitprt
+	ln ${BINDIR}/sendfile ${BINDIR}/sf
+	ln ${BINDIR}/sendfile ${BINDIR}/${PRINT}
+	ln ${BINDIR}/sendfile ${BINDIR}/bitprt
+	ln ${BINDIR}/sendfile ${BINDIR}/punch
+	ln ${BINDIR}/sendfile ${BINDIR}/submit
+	$(INSTALL) -s -m 755 tell ${BINDIR}/${SEND}
+	ln ${BINDIR}/tell ${BINDIR}/send
+	# If you want to call 'send' with command 'tell'
+	# rm -f ${BINDIR}/tell
+	# ln ${BINDIR}/${SEND} ${BINDIR}/tell
+	$(INSTALL) -s -m 755 ygone ${BINDIR}
+	$(INSTALL) -s -m 755 receive ${BINDIR}
+	$(INSTALL) -s -m 750 bmail ${BINDIR}
+	-mkdir -p /var/spool/bitnet
+	$(INSTALL) -s -m 755 transfer ${BINDIR}/transfer
+	$(INSTALL) -s -m 755 njeroutes ${BINDIR}/njeroutes
+	$(INSTALL) -s -m 755 namesfilter ${BINDIR}/namesfilter
+	$(INSTALL) -s -m 750 mailify ${BINDIR}/mailify
+	$(INSTALL) -c -m 750 sysin.sh ${BINDIR}/sysin
+	cp cmd-help.txt $(LIBDIR)
+	cp example.cf $(ETCDIR)/nje.cf
+	cp nje.route* ${LIBDIR}
+	cp file-exit.cf ${LIBDIR}/file-exit.cf
+	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+
 
 acctcat:	$(OBJacctcat)
 	$(CC) $(CFLAGS) -o $@ $(OBJacctcat) $(LIBS)

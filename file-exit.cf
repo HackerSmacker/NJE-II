@@ -22,10 +22,10 @@ Exit-Table:
 #
 # Several special handlings (tests/illustriations)
 #
-NOBODY	 FINFILES *	   *		*	*	 *		   *	*	default				DISCARD
-FOOBAT	 FINFILES *	   *		*	*	 *		   *	*	default				RUN   /usr/local/lib/huji/transfer MEA@$TONODE $SPOOL
-ECHO	 FINFILES *		*		*   *	 *		*		*	   default						 RUN   /usr/local/lib/huji/transfer NOBODY@$FRNODE $SPOOL
-#LPR	 FINFILES *		*		*   *	 *		*		*	   default						 RUN   /usr/local/lib/huji/rprint $SPOOL lpr $FRUSER $FRNODE $TOUSER $FID
+NOBODY	 LINUX1 *	   *		*	*	 *		   *	*	default				DISCARD
+FOOBAT	 LINUX1 *	   *		*	*	 *		   *	*	default				RUN   /usr/local/lib/huji/transfer MEA@$TONODE $SPOOL
+ECHO	 LINUX1 *		*		*   *	 *		*		*	   default						 RUN   /usr/local/lib/huji/transfer NOBODY@$FRNODE $SPOOL
+#LPR	 LINUX1 *		*		*   *	 *		*		*	   default						 RUN   /usr/local/lib/huji/rprint $SPOOL lpr $FRUSER $FRNODE $TOUSER $FID
 #
 #  Define what we do with the SYSINs
 #
@@ -34,13 +34,13 @@ ECHO	 FINFILES *		*		*   *	 *		*		*	   default						 RUN   /usr/local/lib/huji/t
 #  Define a MAILER for our node!
 #  And also handle directly sent mail from nodes without mailers...
 #
-MAILER	 FINFILES	*		*			PUN M   *		 *		  *		default				RUN   /usr/local/lib/huji/mailify $SPOOL
+MAILER	 LINUX1	*		*			PUN M   *		 *		  *		default				RUN   /usr/local/lib/huji/mailify $SPOOL
 *	     *			*		MAIL		PUN M   *		 *		  *		default				RUN   /usr/local/lib/huji/mailify $SPOOL
 #
 # NETINIT is pseudo id for automatically re-generating routing tables
 # This is done with netinit.sh, which must be configured by hand.
 #
-NETINIT	 FINFILES *	   *		*	*   *		 *		  *		default				KEEP
+NETINIT	 LINUX1 *	   *		*	*   *		 *		  *		default				KEEP
 #
 # Finally a 'catch them all' default handling case.
 #

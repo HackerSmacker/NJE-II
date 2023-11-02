@@ -22,5 +22,6 @@ If you don't have groups, use Makefile.nogroup.
 
 Note that the `funetnje` executable has been renamed to `njed` to fit UNIX convention.
 
-If you're extremely brave, look in `sendmail_configs` and try to integrate it with
-Sendmail like JNET on VMS.
+Troubleshooting:
+If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care.
+
