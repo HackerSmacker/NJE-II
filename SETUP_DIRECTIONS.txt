@@ -18,7 +18,7 @@ NJE-II for Linux
     - NAME (your node name)
     - Comment out ALIAS with an *
     - IPADDRESS (your IP or hostname)
-    - QUEUE (the directory to use for your spool queue, /var/spool/bitnet is a good default, create this directory)
+    - QUEUE (the directory to use for your spool queue, /usr/local/nje/var/spool/bitnet is a good default, create this directory)
     - INFORM (your UNIX username @ your node NAME (above), i.e. RUSS@MYUNIXNODE)
     - Setup LINE entries for each remote RSCS node you want to link with, for each entry increase the LINE # by one, starting from 0:
         For example:

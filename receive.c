@@ -418,8 +418,7 @@ usage()
 	fprintf(stderr,"%s:  -b       output raw (binary) of bitcat style.\n",pname);
 	fprintf(stderr,"%s:  -d       debug mode\n",pname);
 	fprintf(stderr,"%s:  -n       don't delete the spool file on successfull processing.\n",pname);
-	fprintf(stderr,"%s:  -o file  output to named filed.\n",pname);
+	fprintf(stderr,"%s:  -o file  output to named file.\n",pname);
 	fprintf(stderr,"%s:  -rawpun  output raw nominal size record contents. 80 for punch, etc.\n",pname);
-	fprintf(stderr,"%s: AND OTHERS -- to be defined/documented!\n",pname);
 	exit(1);
 }

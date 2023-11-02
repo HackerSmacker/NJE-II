@@ -24,4 +24,4 @@ Note that the `funetnje` executable has been renamed to `njed` to fit UNIX conve
 
 Troubleshooting:
 If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care.
-
+If you cannot get ucp to work, try using a FIFO file. Use mkfifo to create it and update your nje.cf file.

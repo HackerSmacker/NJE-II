@@ -1,11 +1,12 @@
 # NJE-II Makefile.
 
 # Change these settings to what you want!
-# Any options omitted from here will be automatically filled in.
 CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX \
 	-DUSE_SOCKOPT -DSOCKBUFSIZE=8192 -DUSE_ENUM_TYPES -DDEBUG \
 	-DCONFIG_FILE='"/usr/local/nje/etc/nje.cf"' \
 	-DPID_FILE='"/usr/local/nje/etc/nje.pid"' \
+	-DDEF_SPOOL_DIR_RULE='"/usr/local/nje/var/spool/bitnet/"' \
+	-DDEF_POSTMAST_SPOOL_DIR='"/usr/local/nje/var/spool/bitnet/POSTMAST"' \
 	-DVMNET_IP_PORT=175
 
 # Compiler options:
