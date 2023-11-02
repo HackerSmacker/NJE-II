@@ -11,19 +11,19 @@ ALIAS		DESKTOP4
 IPADDRESS	192.168.1.40
 * The NJE spooling directory.
 QUEUE		/var/spool/bitnet
-* IPC through either a file or TCP/IP port
+* IPC through either a file (FIFO or socket) or TCP/IP port
 *CMDMAILBOX	F /var/spool/bitnet/.cmdfifo
 *CMDMAILBOX	S /var/spool/bitnet/.cmdsocket
 CMDMAILBOX	U 127.0.0.1 175
 LOG         /var/log/bitnet.log
 RSCSACCT	/var/log/bitnet.acct
 * The routing table.
-TABLE		/usr/local/funetnje/nje.route
+TABLE		/usr/local/nje/nje.route
 * Users to send messages to when lines connect and disconnect
 INFORM		MEA@FINFILES
 * File and message exit processing tables.
-FILEEXITS	/usr/local/funetnje/file-exit.cf
-MSGEXITS	/usr/local/funetnje/msg-exit.cf
+FILEEXITS	/usr/local/nje/lib/file-exit.cf
+MSGEXITS	/usr/local/nje/lib/msg-exit.cf
 DEFFORM		STANDARD
 LLEVEL		2
 * Default NJE router.
@@ -91,7 +91,7 @@ LINE 4 MEA
 *LINE 5  FINFAN
 * TYPE		UNIX_TCP
 * BUFSIZE	8192
-* TIMEOUT	3
+* TIMEOUT	
 * IPPORT		175
 * TCPNAME	convex.csc.fi
 * TCP-SIZE	8192

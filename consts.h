@@ -75,7 +75,7 @@ extern int	errno;
 # define GETTIMESEC(x)	(x)
 #endif
 
-/* NOTE -- THIS IS OVERRIDED BY THE MAKEFILE!!! */
+/* NOTE -- THIS IS OVERRIDEN BY THE MAKEFILE!!! */
 #ifndef CONFIG_FILE
 #define	CONFIG_FILE	"/usr/local/nje/etc/nje.cf"
 #endif

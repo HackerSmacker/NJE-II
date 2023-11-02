@@ -56,7 +56,9 @@
 #define DIRENTTYPE  struct dirent
 #endif
 
-/* These can be used to override variables othervise defined in  consts.h:
-#define CONFIG_FILE "/path/to/hujinje.cf"
-#define PID_FILE    "/path/to/hujinje.pid"
-*/
+#ifndef CONFIG_FILE
+#define CONFIG_FILE "/usr/local/nje/etc/nje.cf"
+#endif
+#ifndef PID_FILE
+#define PID_FILE    "/usr/local/nje/etc/nje.pid"
+#endif
