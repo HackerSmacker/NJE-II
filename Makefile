@@ -57,7 +57,7 @@ CLIENTLIBobj=		\
 	clientlib.a(libhdrtbx.o)	clientlib.a(libndfuncs.o)  \
 	clientlib.a(libustr.o)		clientlib.a(liblstr.o)	   \
 	clientlib.a(logger.o)		clientlib.a(libstrsave.o)  \
-	clientlib.a(nje_fopen.o		clientlib.a(libmcuserid.o) \
+	clientlib.a(nje_fopen.o)	clientlib.a(libmcuserid.o) \
 	clientlib.a(sysnerr.o)		clientlib.a(maxlines.o)
 OBJbmail=bmail.o clientlib.a
 OBJsend=send.o clientlib.a
