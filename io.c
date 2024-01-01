@@ -167,7 +167,7 @@ int infoprint;
 
 	sprintf(from, "@%s", LOCAL_NAME);	/* No username */
 
-	sprintf(line, "FUNET-NJE version %s(%s)/%s, Lines status:",
+	sprintf(line, "NJE-II version %s(%s)/%s, Lines status:",
 		VERSION, SERIAL_NUMBER, version_time);
 	send_nmr(from, to, line, strlen(line), ASCII, CMD_MSG);
 
@@ -345,7 +345,7 @@ const char	*to;	/* User@Node */
 /* Create the sender's address. It is the daemon on the local machine */
 	sprintf(from, "@%s", LOCAL_NAME);	/* No username */
 
-	sprintf(line, "FUNET-NJE version %s(%s)/%s, Lines statistics:",
+	sprintf(line, "NJE-II version %s(%s)/%s, Lines statistics:",
 		VERSION, SERIAL_NUMBER, version_time);
 	send_nmr(from, to, line, strlen(line), ASCII, CMD_MSG);
 

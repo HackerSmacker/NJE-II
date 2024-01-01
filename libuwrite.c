@@ -11,7 +11,6 @@
 #include "prototypes.h"
 #include "clientutils.h"
 
-extern const int sys_nerr;
 
 /*
  |  Write the given string into the file.

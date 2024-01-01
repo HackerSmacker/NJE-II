@@ -174,9 +174,9 @@ EXTERNAL char	DefaultForm[9];
 EXTERNAL char	ClusterNode[16];
 #endif
 
-#define	VERSION		"3.2."	/* Major.Minor.Edition			*/
-#define	SERIAL_NUMBER	"mea"	/* Don't touch it !!!			*/
-#define	LICENSED_TO	"  *** From sources of FINFILES origin ***"
+#define	VERSION		"4.0"	/* Major.Minor.Edition			*/
+#define	SERIAL_NUMBER	"hs"	/* Don't touch it !!!			*/
+#define	LICENSED_TO	"  *** Based on FunetNJE ***"
 
 #define	DEVLEN		64	/* Device name length (must be at least
 				   9 chars long)			*/

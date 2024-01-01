@@ -1,6 +1,8 @@
 NJE-II for Linux
 ================
 
+---> SEE SETUP_DIRECTIONS.TXT PLEASE <---
+
 Compiling:
 make
 groupadd nje
@@ -10,7 +12,7 @@ Configuring:
 vi /usr/local/nje/etc/nje.cf
 Change all the parameters therein, and make sure the spool directories exist!
 vi /usr/local/nje/lib/msg-exit.cf
-Change all occurrences of FINFILES to your node name
+Change all occurrences of LINUX1 to your node name
 vi /usr/local/nje/lib/file-exit.cf
 Do the same, but also check the spool path!
 To change the port, edit -DVMNET_IP_PORT in the Makefile!
@@ -25,3 +27,4 @@ Note that the `funetnje` executable has been renamed to `njed` to fit UNIX conve
 Troubleshooting:
 If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care.
 If you cannot get ucp to work, try using a FIFO file. Use mkfifo to create it and update your nje.cf file.
+If you cannot qrdr, make the spool directories. 

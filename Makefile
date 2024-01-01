@@ -182,6 +182,7 @@ install:
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+	cp ${MANSRCS} ${MANDIR}
 
 install_bsd:
 	@echo "Installing everything."
@@ -222,6 +223,7 @@ install_bsd:
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+	cp ${MANSRCS} ${MANDIR}
 
 
 acctcat:	$(OBJacctcat)

@@ -2,8 +2,8 @@
 #
 
 # Spool directory. Needs to concur with nje.cf or you will have broken functionality!
-Spool-Dir:	/var/spool/bitnet/
-Postmast-Dir:	/var/spool/bitnet/POSTMAST
+Spool-Dir:	/usr/local/nje/var/spool/bitnet/
+Postmast-Dir:	/usr/local/nje/var/spool/bitnet/POSTMAST
 
 # Now list of things to match and then what to do
 # To do keywords:	DISCARD to /dev/null.

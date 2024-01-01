@@ -33,12 +33,12 @@ NJE-II for Linux
            MAX-STREAMS    7
 
   - Open /usr/local/nje/lib/msg-exit.cf with your favorite editor, change as follows:
-    - Change ALL occurences of FINFILES with your node NAME from nje.cf.
+    - Change ALL occurences of LINUX1 with your node NAME from nje.cf.
 
   - Open /usr/local/nje/lib/file-exit.cf with your favorite editor, change as follows:
     - Change Spool-Dir to match QUEUE from nje.cf.
-    - Change Postmast-Dir to begin with QUEUE from nje.cf, i.e. /var/spool/bitnet/POSTMAST.
-    - Change ALL occurences of FINFILES with your node NAME from nje.cf.
+    - Change Postmast-Dir to begin with QUEUE from nje.cf, i.e. /usr/local/nje/var/spool/bitnet/POSTMAST.
+    - Change ALL occurences of LINUX1 with your node NAME from nje.cf.
 
 4. Setup your remote RSCS systems with a TCPNJE entry for this system.
   - On VM/ESA / z/VM this would look like the following:
@@ -51,6 +51,10 @@ NJE-II for Linux
       Add a START for your nodename at the end of the file, after 'RSCS NETWORK START' but before 'exit rc' as follows:
         'RSCS START nodename'
 
+    Or do it on the fly:
+        SMSG RSCS DEFINE nodename TYPE TCPNJE PARM HOST=ipaddr LCLPORT=175 RMTPORT=175
+        SMSG RSCS START nodename
+
     Note that these are just the lines you are required to change, not the complete file! There are other lines in there that will be present on some VM systems. Freshly-installed VM systems require you to write a config file from scratch.
 
     As MAINT:
@@ -58,6 +62,6 @@ NJE-II for Linux
       XAUTOLOG RSCS
 
 5. On UNIX, start the NJE:
-  - sudo /usr/local/nje/lib/njed
+  - sudo /usr/local/nje/bin/njed
 
 (These directions were written by Russ, the second person to get this installed, thanks!)
