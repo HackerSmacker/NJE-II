@@ -40,6 +40,8 @@ NJE-II for Linux
     - Change Postmast-Dir to begin with QUEUE from nje.cf, i.e. /usr/local/nje/var/spool/bitnet/POSTMAST.
     - Change ALL occurences of LINUX1 with your node NAME from nje.cf.
 
+  - Open /usr/local/nje/lib/njeroutes.header and .netinit with your favroite editor, and insert routes to other systems. Edit the LOCAL line in .netinit, then invoke make to update the route table.
+
 4. Setup your remote RSCS systems with a TCPNJE entry for this system.
   - On VM/ESA / z/VM this would look like the following:
     In RSCS CONFIG:

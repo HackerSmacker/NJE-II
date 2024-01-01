@@ -23,10 +23,11 @@ SEND=tell
 PRINT=njeprint
 
 # Install locations.
-MANDIR=/usr/local/nje/man
-LIBDIR=/usr/local/nje/lib
-BINDIR=/usr/local/nje/bin
-ETCDIR=/usr/local/nje/etc
+PREFIXDIR=/usr/local/nje
+MANDIR=${PREFIXDIR}/man
+LIBDIR=${PREFIXDIR}/lib
+BINDIR=${PREFIXDIR}/bin
+ETCDIR=${PREFIXDIR}/etc
 
 SRC= bcb_crc.c bmail.c file_queue.c headers.c io.c main.c \
 	nmr.c protocol.c read_config.c recv_file.c send.c \
@@ -141,11 +142,14 @@ routeinstall: nje.route
 install:
 	@echo "Installing everything."
 	@echo "Must propably be root for this also."
+	-mkdir ${PREFIXDIR}
 	-mkdir ${BINDIR}
 	-mkdir ${BINDIR}
 	-mkdir ${MANDIR}
 	-mkdir ${ETCDIR}
 	-mkdir ${LIBDIR}
+	-mkdir -p ${PREFIXDIR}/var/spool/bitnet
+	-mkdir -p ${PREFIXDIR}/var/log
 	$(INSTALL) -s -m 755 njed ${BINDIR}/njed.x
 	mv ${BINDIR}/njed.x ${BINDIR}/njed
 	$(INSTALL) -s -m 755 bitsend ${BINDIR}
@@ -182,21 +186,23 @@ install:
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+	cp exampleRt.header ${LIBDIR}/njeroutes.header
+	cp exampleRt.netinit ${LIBDIR}/njeroutes.netinit
+	cp exampleRt.makefile ${LIBDIR}/Makefile
 	cp ${MANSRCS} ${MANDIR}
 
-install_bsd:
+install_nouid:
 	@echo "Installing everything."
-	-mkdir ${BINDIR}
+	-mkdir ${PREFIXDIR}
 	-mkdir ${BINDIR}
 	-mkdir ${MANDIR}
 	-mkdir ${ETCDIR}
 	-mkdir ${LIBDIR}
-	$(INSTALL) -s -m 755 njed ${BINDIR}/njed.x
-	mv ${BINDIR}/njed.x ${BINDIR}/njed
-	$(INSTALL) -s -m 755 bitsend ${BINDIR}
-	$(INSTALL) -s -m 755 qrdr ${BINDIR}
-	$(INSTALL) -s -m 750 ucp ${BINDIR}
-	$(INSTALL) -s -m 755 sendfile ${BINDIR}
+	cp njed ${BINDIR}/njed
+	cp bitsend ${BINDIR}
+	cp qrdr ${BINDIR}
+	cp ucp ${BINDIR}
+	cp sendfile ${BINDIR}
 	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
 	rm -f ${BINDIR}/sf ${BINDIR}/bitprt
 	ln ${BINDIR}/sendfile ${BINDIR}/sf
@@ -204,25 +210,27 @@ install_bsd:
 	ln ${BINDIR}/sendfile ${BINDIR}/bitprt
 	ln ${BINDIR}/sendfile ${BINDIR}/punch
 	ln ${BINDIR}/sendfile ${BINDIR}/submit
-	$(INSTALL) -s -m 755 tell ${BINDIR}/${SEND}
+	cp tell ${BINDIR}/${SEND}
 	ln ${BINDIR}/tell ${BINDIR}/send
 	# If you want to call 'send' with command 'tell'
 	# rm -f ${BINDIR}/tell
 	# ln ${BINDIR}/${SEND} ${BINDIR}/tell
-	$(INSTALL) -s -m 755 ygone ${BINDIR}
-	$(INSTALL) -s -m 755 receive ${BINDIR}
-	$(INSTALL) -s -m 750 bmail ${BINDIR}
-	-mkdir -p /var/spool/bitnet
-	$(INSTALL) -s -m 755 transfer ${BINDIR}/transfer
-	$(INSTALL) -s -m 755 njeroutes ${BINDIR}/njeroutes
-	$(INSTALL) -s -m 755 namesfilter ${BINDIR}/namesfilter
-	$(INSTALL) -s -m 750 mailify ${BINDIR}/mailify
-	$(INSTALL) -c -m 750 sysin.sh ${BINDIR}/sysin
+	cp ygone ${BINDIR}
+	cp receive ${BINDIR}
+	cp bmail ${BINDIR}
+	cp transfer ${BINDIR}/transfer
+	cp njeroutes ${BINDIR}/njeroutes
+	cp namesfilter ${BINDIR}/namesfilter
+	cp mailify ${BINDIR}/mailify
+	cp sysin.sh ${BINDIR}/sysin
 	cp cmd-help.txt $(LIBDIR)
 	cp example.cf $(ETCDIR)/nje.cf
 	cp nje.route* ${LIBDIR}
 	cp file-exit.cf ${LIBDIR}/file-exit.cf
 	cp msg-exit.cf ${LIBDIR}/msg-exit.cf
+	cp exampleRt.header ${LIBDIR}/njeroutes.header
+	cp exampleRt.netinit ${LIBDIR}/njeroutes.netinit
+	cp exampleRt.makefile ${LIBDIR}/Makefile
 	cp ${MANSRCS} ${MANDIR}
 
 

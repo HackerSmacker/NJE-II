@@ -28,16 +28,23 @@ typedef unsigned short u_int16;
 typedef short int16;
 #else
 #define __U_INT32
+#ifndef _AIX
 typedef unsigned long u_int32;
 typedef long int32;
 typedef unsigned short u_int16;
 typedef short int16;
+#else
+#include <stdint.h>
+typedef uint16_t u_int16;
+typedef uint32_t u_int32;
+typedef uint8_t u_int8;
+#endif
 #endif
 #endif
 
 #include "ebcdic.h"
 
-/* The RSCS version we emulate (currently 1.3) --  [mea] 2.1 ! */
+/* The RSCS version we emulate -- 2.1! */
 #define	RSCS_VERSION	2
 #define	RSCS_RELEASE	1
 

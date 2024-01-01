@@ -42,9 +42,11 @@ typedef unsigned int u_int32;
 #else
 typedef unsigned long u_int32;
 #endif
+#ifndef _AIX
 typedef long int32;
 typedef unsigned short u_int16;
 typedef short int16;
+#endif
 #endif
 #endif
 

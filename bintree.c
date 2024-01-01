@@ -40,7 +40,11 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef _AIX
 #include <sys/fcntl.h>
+#else
+#include <fcntl.h>
+#endif
 #include <string.h>
 
 #ifndef __STDC__

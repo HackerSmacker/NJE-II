@@ -9,11 +9,18 @@ typedef int int32;
 typedef unsigned short u_int16;
 typedef short int16;
 #else
+#ifndef _AIX
 #define __U_INT32
 typedef unsigned long u_int32;
 typedef long int32;
 typedef unsigned short u_int16;
 typedef short int16;
+#else
+#include <stdint.h>
+typedef uint8_t u_int8;
+typedef uint16_t u_int16;
+typedef uint32_t u_int32;
+#endif
 #endif
 #endif
 
