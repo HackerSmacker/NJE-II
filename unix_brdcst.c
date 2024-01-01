@@ -19,7 +19,7 @@
 #include "prototypes.h"
 
 #ifndef UTMP_FILE
-#define UTMP_FILE    "/var/run/utmp"
+#define UTMP_FILE    "/var/run/utx.active"
 #endif
 
 extern int alarm_happened;
@@ -41,8 +41,8 @@ char *msg;
 	int msgsize;
 	char buf[BUFSIZ];
 	char user[40];
-	int i, m, n = (BUFSIZ / sizeof(struct utmp));
-	int bufsiz = n * sizeof(struct utmp);
+	int i, m, n = (BUFSIZ / sizeof(struct utmpx));
+	int bufsiz = n * sizeof(struct utmpx);
 	char tty[16];
 	struct stat stats;
 
@@ -62,16 +62,16 @@ char *msg;
 	cnt = 0;
 
 	while ((m = read(fdutmp, buf, bufsiz)) > 0)  {
-	  m /= sizeof(struct utmp);
+	  m /= sizeof(struct utmpx);
 	  for (i = 0; i < m; i++)   {
-	    struct utmp *utp = &((struct utmp*)buf)[i];
+	    struct utmpx *utp = &((struct utmpx*)buf)[i];
 #ifdef LOGIN_PROCESS /* POSIX or what ?? */
 	    if (utp->ut_type != LOGIN_PROCESS &&
 		utp->ut_type != USER_PROCESS) continue;
 #endif
-	    if (utp->ut_name[0] == 0)
+	    if (utp->ut_user[0] == 0)
 	      continue;
-	    if (strncasecmp(user, utp->ut_name,8) != 0)
+	    if (strncasecmp(user, utp->ut_user,8) != 0)
 	      continue;
 	    sprintf(tty, "/dev/%s", utp->ut_line);
 	    alarm_happened = 0;

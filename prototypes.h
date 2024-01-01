@@ -32,7 +32,7 @@
 #endif /* AIX */
 #include <errno.h>
 #include <pwd.h>
-#include <utmp.h>
+#include <utmpx.h>
 
 #ifdef	DEBUG_FOPEN
 #define fopen _nje_fopen
@@ -77,7 +77,6 @@ extern int	errno;
 #ifdef __DARWIN_UNIX03
 extern const int	sys_nerr;	/* Maximum error number recognised */
 #else
-extern int	sys_nerr;	/* Maximum error number recognised */
 #endif
 
 /* extern char	*sys_errlist[];	*/ /* List of error messages */

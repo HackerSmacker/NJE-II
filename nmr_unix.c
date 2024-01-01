@@ -22,11 +22,11 @@
 
 #include "consts.h"
 #include "prototypes.h"
-#include <utmp.h>
+#include <utmpx.h>
 #include <time.h>
 
 #ifndef UTMP_FILE
-#define UTMP_FILE  "/var/run/utmp"
+#define UTMP_FILE  "/var/run/utx.active"
 #endif
 
 
@@ -38,7 +38,7 @@ const char	 cmd;
 {
 	char	line[LINESIZE];
 	int	fd, lines;
-	struct utmp	Utmp;
+	struct utmpx	Utmp;
 	struct passwd	*pwd;
 	struct stat     stats;
 	time_t	now;
@@ -63,8 +63,8 @@ const char	 cmd;
 	    if (Utmp.ut_type != LOGIN_PROCESS &&
 		Utmp.ut_type != USER_PROCESS) continue;
 #endif
-	    if (*Utmp.ut_name == 0) continue; /* Try next */
-	    strncpy(uname,Utmp.ut_name,8);
+	    if (*Utmp.ut_user == 0) continue; /* Try next */
+	    strncpy(uname,Utmp.ut_user,8);
 	    uname[8] = 0;
 	    pwd = getpwnam(uname);
 	    if (pwd == NULL) continue;	/* Hmm ??? */
