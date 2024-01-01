@@ -18,11 +18,13 @@
 #include "consts.h"
 #include "prototypes.h"
 
-#ifndef UTMP_FILE
-#define UTMP_FILE    "/var/run/utx.active"
-#endif
-
 extern int alarm_happened;
+
+#ifdef USE_UTMPX
+#include <utmpx.h>
+#else
+#include <utmp.h>
+#endif
 
 /*
 * Write the message msg to the user, on all ttys he is currently logged
@@ -41,8 +43,14 @@ char *msg;
 	int msgsize;
 	char buf[BUFSIZ];
 	char user[40];
-	int i, m, n = (BUFSIZ / sizeof(struct utmpx));
+	int i, m;
+#ifdef USE_UTMPX
+	int n = (BUFSIZ / sizeof(struct utmpx));
 	int bufsiz = n * sizeof(struct utmpx);
+#else
+	int n = (BUFSIZ / sizeof(struct utmp));
+	int bufsiz = n * sizeof(struct utmp);
+#endif
 	char tty[16];
 	struct stat stats;
 
@@ -64,7 +72,11 @@ char *msg;
 	while ((m = read(fdutmp, buf, bufsiz)) > 0)  {
 	  m /= sizeof(struct utmpx);
 	  for (i = 0; i < m; i++)   {
+#ifdef USE_UTMPX
 	    struct utmpx *utp = &((struct utmpx*)buf)[i];
+#else
+	    struct utmpx *utp = &((struct utmpx*)buf)[i];
+#endif
 #ifdef LOGIN_PROCESS /* POSIX or what ?? */
 	    if (utp->ut_type != LOGIN_PROCESS &&
 		utp->ut_type != USER_PROCESS) continue;

@@ -15,7 +15,7 @@ QUEUE		/usr/local/nje/var/spool/bitnet
 *CMDMAILBOX	F /usr/local/nje/var/spool/bitnet/.cmdfifo
 *CMDMAILBOX	S /usr/local/nje/var/spool/bitnet/.cmdsocket
 CMDMAILBOX	U 127.0.0.1 175
-LOG         /usr/local/nje/var/log/bitnet.log
+LOG		/usr/local/nje/var/log/bitnet.log
 RSCSACCT	/usr/local/nje/var/log/bitnet.acct
 * The routing table.
 TABLE		/usr/local/nje/lib/nje.route

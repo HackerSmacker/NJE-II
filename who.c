@@ -5,8 +5,9 @@
 #include <pwd.h>
 #include <utmp.h>
 #include <fcntl.h>
+#include <string.h>
 
-#define UTMP_FILE  "/var/run/utmp"
+#define UTMP_FILE  "/etc/utmp"
 #define LINESIZE 512
 
 static void

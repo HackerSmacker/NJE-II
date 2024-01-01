@@ -27,6 +27,7 @@
 #include "clientutils.h"
 #include "ndlib.h"
 #include <sysexits.h>
+#include <time.h>
 
 #ifndef MAILERNAME	/* Name of the user that "SENDS" email */
 #define MAILERNAME "MAILER"

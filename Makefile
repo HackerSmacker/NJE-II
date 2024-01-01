@@ -12,7 +12,7 @@ CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX \
 # Compiler options:
 CC=gcc
 CPP=gcc -E
-CFLAGS= -g -O2 -Wpacked -Wpadded $(CDEFS)
+CFLAGS= -g -O2 -Wpacked -Wpadded ${CDEFS}
 RANLIB=ranlib
 INSTALL=install
 

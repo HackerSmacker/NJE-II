@@ -58,6 +58,22 @@ typedef short int16;
 unsigned long	DMF_routine_address;	/* The address of DMF framing routine */
 #endif
 
+/* utmp choices */
+#ifdef _AIX
+#define UTMP_FILE "/etc/utmp"
+#endif
+#ifdef __gnu_linux__
+#define UTMP_FILE "/var/run/utmp"
+#endif
+#ifdef __FreeBSD__
+#define UTMP_FILE "/var/run/utx.active"
+#define USE_UTMPX
+#endif
+#ifdef __APPLE__
+#define UTMP_FILE "/var/run/utmpx"
+#define USE_UTMPX
+#endif
+
 /*   Unix specific includes   */
 #ifdef UNIX
 #include <stdio.h>	/* Unix standard file descriptors */

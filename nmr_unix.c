@@ -22,13 +22,12 @@
 
 #include "consts.h"
 #include "prototypes.h"
+#ifdef USE_UTMPX
 #include <utmpx.h>
-#include <time.h>
-
-#ifndef UTMP_FILE
-#define UTMP_FILE  "/var/run/utx.active"
+#else
+#include <utmp.h>
 #endif
-
+#include <time.h>
 
 void
 list_users(Faddress, Taddress, cmd, UserName)
@@ -38,7 +37,12 @@ const char	 cmd;
 {
 	char	line[LINESIZE];
 	int	fd, lines;
+#ifdef USE_UTMPX
 	struct utmpx	Utmp;
+#else
+	
+	struct utmp	Utmp;
+#endif
 	struct passwd	*pwd;
 	struct stat     stats;
 	time_t	now;
