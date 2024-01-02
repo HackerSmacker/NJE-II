@@ -239,18 +239,18 @@ update:
 	$(INSTALL) -s -m 755 njed ${BINDIR}/njed
 	$(INSTALL) -s -m 755 bitsend ${BINDIR}
 	$(INSTALL) -s -m 755 qrdr ${BINDIR}
-	$(INSTALL) -s -m 755 njewrite.sh ${BINDIR}
+	$(INSTALL) -m 755 njewrite.sh ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 755 sendfile ${BINDIR}
 	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
 	rm -f ${BINDIR}/sf ${BINDIR}/bitprt
-	ln ${BINDIR}/sendfile ${BINDIR}/sf
-	ln ${BINDIR}/sendfile ${BINDIR}/${PRINT}
-	ln ${BINDIR}/sendfile ${BINDIR}/bitprt
-	ln ${BINDIR}/sendfile ${BINDIR}/punch
-	ln ${BINDIR}/sendfile ${BINDIR}/submit
+	-ln ${BINDIR}/sendfile ${BINDIR}/sf
+	-ln ${BINDIR}/sendfile ${BINDIR}/${PRINT}
+	-ln ${BINDIR}/sendfile ${BINDIR}/bitprt
+	-ln ${BINDIR}/sendfile ${BINDIR}/punch
+	-ln ${BINDIR}/sendfile ${BINDIR}/submit
 	$(INSTALL) -s -g ${NJEGRP} -m 755 tell ${BINDIR}/${SEND}
-	ln ${BINDIR}/tell ${BINDIR}/send
+	-ln ${BINDIR}/tell ${BINDIR}/send
 	$(INSTALL) -s -g ${NJEGRP} -m 755 ygone ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 755 receive ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 750 bmail ${BINDIR}
