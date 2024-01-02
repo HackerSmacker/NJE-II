@@ -75,7 +75,7 @@ char *msg;
 #ifdef USE_UTMPX
 	    struct utmpx *utp = &((struct utmpx*)buf)[i];
 #else
-	    struct utmpx *utp = &((struct utmpx*)buf)[i];
+	    struct utmp *utp = &((struct utmp*)buf)[i];
 #endif
 #ifdef LOGIN_PROCESS /* POSIX or what ?? */
 	    if (utp->ut_type != LOGIN_PROCESS &&

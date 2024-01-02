@@ -61,5 +61,8 @@ ECHO     LINUX1 *        *        M  RUN  /usr/local/bin/send -u echo $FRUSER@$F
 FINGER   LINUX1 .        *        M  DISCARD
 FINGER   LINUX1 *        *        M  RUN /usr/local/lib/huji/nje-finger $FRUSER $FRNODE $ARGS
 
-# The default
-*        *        *        *        M  BRCAST
+# The defaults. 
+# IMPORTANT!!!!
+# Use the first line if you have working utmp support, else use the second line.
+#*        *        *        *        M  BRCAST
+*        LINUX1 *        *        M  RUN /usr/local/nje/bin/njewrite.sh $FRUSER@$FRNODE $TOUSER $TEXT
