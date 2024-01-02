@@ -11,6 +11,9 @@
 #include "prototypes.h"
 #include "clientutils.h"
 
+#ifdef __gnu_linux__
+extern const int sys_nerr;
+#endif
 
 /*
  |  Write the given string into the file.

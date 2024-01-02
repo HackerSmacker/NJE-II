@@ -49,9 +49,8 @@ int		PassiveSocketChannel = -1,	/* On which we listen */
 static u_int32	get_host_ip_address();
 
 extern int	errno;
-#ifdef __DARWIN_UNIX03
-extern const int	sys_nerr;	/* Maximum error number recognised */
-#else
+#ifdef __gnu_linux__
+extern const int sys_nerr;
 #endif
 /* extern char	*sys_errlist[];	*/ /* List of error messages */
 #define	PRINT_ERRNO	(errno > sys_nerr ? "***" : strerror(errno))
