@@ -182,6 +182,7 @@ install:
 	$(INSTALL) -s -m 755 namesfilter ${BINDIR}/namesfilter
 	$(INSTALL) -s -g ${NJEGRP} -m 750 mailify ${BINDIR}/mailify
 	$(INSTALL) -c -g ${NJEGRP} -m 750 sysin.sh ${BINDIR}/sysin
+	$(INSTALL) -c -g ${NJEGRP} -m 750 njemail.sh ${BINDIR}/njemail
 	cp cmd-help.txt $(LIBDIR)
 	cp example.cf $(ETCDIR)/nje.cf
 	cp nje.route* ${LIBDIR}
@@ -225,6 +226,7 @@ install_nouid:
 	cp namesfilter ${BINDIR}/namesfilter
 	cp mailify ${BINDIR}/mailify
 	cp sysin.sh ${BINDIR}/sysin
+	cp njemail.sh ${BINDIR}/njemail
 	cp cmd-help.txt $(LIBDIR)
 	cp example.cf $(ETCDIR)/nje.cf
 	cp nje.route* ${LIBDIR}
