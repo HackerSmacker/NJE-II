@@ -154,7 +154,7 @@ install:
 	mv ${BINDIR}/njed.x ${BINDIR}/njed
 	$(INSTALL) -s -m 755 bitsend ${BINDIR}
 	$(INSTALL) -s -m 755 qrdr ${BINDIR}
-	$(INSTALL) -s -m 755 njewrite.sh ${BINDIR}
+	$(INSTALL) -m 755 njewrite.sh ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 750 ucp ${BINDIR}
 	$(INSTALL) -s -g ${NJEGRP} -m 755 sendfile ${BINDIR}
 	rm -f ${BINDIR}/${PRINT} ${BINDIR}/submit ${BINDIR}/punch
