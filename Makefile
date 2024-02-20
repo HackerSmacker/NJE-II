@@ -1,7 +1,7 @@
 # NJE-II Makefile.
 
 # Change these settings to what you want!
-CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX \
+CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX -DHAS_PUTENV \
 	-DUSE_SOCKOPT -DSOCKBUFSIZE=8192 -DUSE_ENUM_TYPES -DDEBUG \
 	-DCONFIG_FILE='"/usr/local/nje/etc/nje.cf"' \
 	-DPID_FILE='"/usr/local/nje/etc/nje.pid"' \
@@ -10,9 +10,9 @@ CDEFS=-DUSG -DNBCONNECT -DNBSTREAM -DUSE_XMIT_QUEUE -DUNIX \
 	-DVMNET_IP_PORT=175
 
 # Compiler options:
-CC=gcc
-CPP=gcc -E
-CFLAGS= -g -O2 -Wpacked -Wpadded ${CDEFS}
+CC=cc
+CPP=cc -E
+CFLAGS=-g $(CDEFS)
 RANLIB=ranlib
 INSTALL=install
 

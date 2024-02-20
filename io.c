@@ -180,7 +180,7 @@ int infoprint;
 		  Line->QueuedFiles);
 
 
-	  strcat(line,linestate2string(Line->state,Line->socketpending));
+	  strcat(line,linestate2string(Line->state,Line->socknumpending));
 	  strcat(line,linetypedev2string(Line->type,Line->device));
 
 	  send_nmr(from, to, line, strlen(line), ASCII, CMD_MSG);
@@ -504,12 +504,12 @@ const int Index;
 	  return;
 	}
 
-	if (Line->socket >= 0)
-	  close(Line->socket);
-	Line->socket = -1;
-	if (Line->socketpending >= 0)
-	  close(Line->socketpending);
-	Line->socketpending = -1;
+	if (Line->socknum >= 0)
+	  close(Line->socknum);
+	Line->socknum = -1;
+	if (Line->socknumpending >= 0)
+	  close(Line->socknumpending);
+	Line->socknumpending = -1;
 #ifdef NBSTREAM
 	Line->WritePending = NULL;
 #endif

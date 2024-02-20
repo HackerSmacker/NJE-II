@@ -18,6 +18,15 @@
  |
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+
+extern const int sys_nerr;
+extern int errno;
+
 /* Some hard-ware dependencies */
 #ifndef __U_INT32
 #if	defined(__alpha__) /* 64 bit.. */
@@ -48,45 +57,47 @@ typedef uint8_t u_int8;
 #define	RSCS_VERSION	2
 #define	RSCS_RELEASE	1
 
+#pragma pack(1)
+
 /* The Enquiry block */
 struct	ENQUIRE {
 		unsigned char	soh, enq, pad;	/* 3 characters block */
-	} ;
+	} ; 
 
 /* The negative ACK block */
 struct	NEGATIVE_ACK {
 		unsigned char	nak, pad;
-	} ;
+	} ; 
 
 /* The positive ACK */
 struct	POSITIVE_ACK {
 		unsigned char	dle, ack, pad;
-	} ;
+	} ; 
 
 /* Final signoff */
 struct	SIGN_OFF {
 		unsigned char	RCB, SRCB, pad;
-	};
+	}; 
 
 /* End of File block */
 struct	EOF_BLOCK {
 		unsigned char	RCB, SRCB, F1, F2;
-	};
+	}; 
 
 /* Permit reception of file */
 struct	PERMIT_FILE {
 		unsigned char	RCB, SRCB, SCB, END_RCB;
-	};
+	}; 
 
 /* Ack transmission complete */
 struct	COMPLETE_FILE {
 		unsigned char	RCB, SRCB, SCB, END_RCB;
-	};
+	}; 
 
 /* Reject a file request */
 struct	REJECT_FILE {
 		unsigned char	RCB, SRCB, SCB, END_RCB;
-	};
+	}; 
 
 struct	JOB_HEADER {
 		unsigned short	LENGTH;	/* The header which comes before */
@@ -134,7 +145,7 @@ struct	JOB_HEADER {
 /* M */				NJHGDEPT[8],	/* Prgmr's dept. number      */
 /* M */				NJHGBLDG[8];	/* Prgmr's building number   */
 		u_int32		NJHGNREC;	/* Record count on output    */
-		};
+		}; 
 
 struct	DATASET_HEADER_G {		/* General section */
 	/*  4*/	unsigned short	LENGTH_4;
@@ -182,7 +193,7 @@ struct	DATASET_HEADER_G {		/* General section */
  */
 	/*106*/			r4[2],
 /* M */	/*108*/			NDHGPMDE[8];
-	/*116*/	};
+	/*116*/	}; 
 
 struct	DATASET_HEADER_RSCS {		/* RSCS section */
 	/*116*/	unsigned short	LENGTH_4;
@@ -212,7 +223,8 @@ struct	DATASET_HEADER_RSCS {		/* RSCS section */
 	/*159*/			NDHVRELN;	/* RSCS release number of
 						   headers writer	     */
 	/*160*/	unsigned char	NDHVTAGR[136];	/* RSCS TAG data	     */
-	/*296*/ };
+	/*296*/ }; 
+
 
 struct	DATASET_HEADER {	/* Includes the General section,
 				   and the RSCS section */
@@ -221,7 +233,8 @@ struct	DATASET_HEADER {	/* Includes the General section,
 	/*  3*/			SEQUENCE;
 	/*  4*/	struct DATASET_HEADER_G    NDH;
 	/*116*/	struct DATASET_HEADER_RSCS RSCS;
-	/*296*/	};
+	/*296*/	};  
+  
 
 struct	JOB_TRAILER {
 		unsigned short	LENGTH;
@@ -243,8 +256,7 @@ struct	JOB_TRAILER {
 				NJTGAXPR,	/* "                         */
 				NJTGIOPR,	/* ... output selection prty */
 				NJTGAOPR;	/* "                         */
-		} ;
-
+		}; 
 
 struct	SIGNON {		/* Initial and response */
 		unsigned char	NCCRCB,		/* Gen rec ctrl byte	     */
@@ -260,7 +272,7 @@ struct	SIGNON {		/* Initial and response */
 /* M */				NCCINPAS[8],	/* Node password	     */
 				NCCIFLG;	/* Feature flags (X'80')     */
 		u_int32		NCCIFEAT;
-	} __attribute__ ((packed));
+	}; 
 
 
 /* Nodal messages records: */
@@ -292,7 +304,7 @@ struct	NMR_MESSAGE {		/* Message */
 				NMRFMQUL,	/* From node qualifier	     */
 				NMRMSG[132];	/* Message		     */
 				/* NMROUT is the first 8 chars of the NMRMSG */
-	};
+	}; 
 
 /*
    Section ID codes:
@@ -317,3 +329,5 @@ struct	NMR_MESSAGE {		/* Message */
 	0xC0	User-defined section
 			MODIFIER = 0x00 -> user-section
 */
+
+#pragma pack

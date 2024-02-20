@@ -628,8 +628,8 @@ struct	LINE	{
 #ifdef UNIX
 	struct	sockaddr_in	/* For TcpIp communication		*/
 		SocketName;	/* The socket's name and address	*/
-	int	socket;		/* The socket FD			*/
-	int	socketpending;	/* Flag is the open is just starting..
+	int	socknum;		/* The socket FD			*/
+	int	socknumpending;	/* Flag is the open is just starting..
 				   After all, we can do it somewhat
 				   asynchronoysly -- try anyway.	*/
 

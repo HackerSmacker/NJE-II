@@ -9,6 +9,7 @@
 
 /* Slightly edited copy of this is inside the   file_queue.c! */
 
+#include "headers.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "consts.h"

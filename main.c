@@ -44,7 +44,7 @@ FILE	*AddressFd;	/* Temporary - for DMF routine address */
 #include "consts.h"	/* Our RSCS constants */
 #include "headers.h"
 #include "prototypes.h"
-#include <sysexits.h>	/* BSD UNIXoid thing */
+#include "sysexits.h"	/* BSD UNIXoid thing */
 
 static void  init_lines_data_base __(( void ));
 static void  init_variables __(( void ));
@@ -329,8 +329,8 @@ init_lines_data_base()
 	for (i = 0; i < ABSMAX_LINES; i++) {
 
 	  IoLines[i].flags		= 0;
-	  IoLines[i].socket		= -1;
-	  IoLines[i].socketpending	= -1;
+	  IoLines[i].socknum		= -1;
+	  IoLines[i].socknumpending	= -1;
 	  IoLines[i].QueueStart		= NULL;
 	  IoLines[i].QueueEnd		= NULL;
 	  IoLines[i].MessageQstart	= NULL;

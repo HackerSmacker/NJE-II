@@ -13,6 +13,7 @@
   2  =  FilePath
 */
 
+#include "headers.h"
 #include "prototypes.h"
 #include "clientutils.h"
 
@@ -187,10 +188,12 @@ Args:  [-t] Destin@Address absolute-filepath\n\
 /*
  | Log the string, and then abort.
  */
-volatile void
+/*
+void
 bug_check(string)
 const char	*string;
 {
 	logger(1, "Bug check: %s\n", string);
 	exit(100);
 }
+*/

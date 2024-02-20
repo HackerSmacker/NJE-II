@@ -117,27 +117,27 @@ const int	Index, finalize;
 #endif
 	  /* A fresh start.. */
 
-	  if (Line->socket >= 0)
-	    close(Line->socket);
+	  if (Line->socknum >= 0)
+	    close(Line->socknum);
 
-	  Line->socket = -1;
-	  Line->socketpending = -1;
+	  Line->socknum = -1;
+	  Line->socknumpending = -1;
 
 	  /* Create a local socket */
 	  if ((Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
 	    logger(1, "UNIX_TCP, Can't get local socket. (Line %s) error: %s\n",
 		   Line->HostName, PRINT_ERRNO);
 	    Line->state = INACTIVE;
-	    close(Line->socket);
+	    close(Line->socknum);
 	    return;
 	  }
 
-	  Line->socket = Socket;
+	  Line->socknum = Socket;
 #if	defined(NBCONNECT)||defined(NBSTREAM)
-	  Line->socketpending = Socket; /* Mark that we are doing it.. */
+	  Line->socknumpending = Socket; /* Mark that we are doing it.. */
 	  setsockblocking(Socket,0);
 #else
-	  Line->socketpending = -1;
+	  Line->socknumpending = -1;
 #endif
 
 #if 1  /* Hmm...  this does force the local end.. */
@@ -163,7 +163,7 @@ const int	Index, finalize;
 		   Line->HostName);
 	    Line->state = RETRYING;
 	    close(Socket);
-	    Line->socket = 0;
+	    Line->socknum = 0;
 	    return;
 	  }
 	  logger(4,"UNIX_TCP: Resolved `%s' to address `%s'\n",HostName,
@@ -189,8 +189,8 @@ const int	Index, finalize;
 		   Line->HostName, PRINT_ERRNO);
 	    Line->state = RETRYING;
 	    close(Socket);
-	    Line->socket = -1;
-	    Line->socketpending = -1;
+	    Line->socknum = -1;
+	    Line->socknumpending = -1;
 	    return;
 	  }
 #if	defined(NBCONNECT)||defined(NBSTREAM)
@@ -199,9 +199,9 @@ const int	Index, finalize;
 
 	/* Now we are finishing it! */
 
-	Line->socketpending = -1;
+	Line->socknumpending = -1;
 #if	defined(NBCONNECT)||defined(NBSTREAM)
-	/* setsockblocking(Line->socket,1); */
+	/* setsockblocking(Line->socknum,1); */
 #endif
 
 	/* Send the initial connection block */
@@ -227,7 +227,7 @@ const int	Index, finalize;
 	trace(&ControlBlock, VMctl_SIZE, 5);
 #endif
 
-	if (writen(Line->socket, &ControlBlock, VMctl_SIZE) == -1) {
+	if (writen(Line->socknum, &ControlBlock, VMctl_SIZE) == -1) {
 	  /* If the delayed open failed, be quiet */
 	  if (finalize && errno == EPIPE) {
 	    logger(2, "UNIX_TCP, Can't `delayed-connect'. (Line %s)\n",
@@ -242,7 +242,7 @@ const int	Index, finalize;
 	}
 
 #if	defined(NBSTREAM)
-	setsockblocking(Line->socket,0);
+	setsockblocking(Line->socknum,0);
 #endif
 
 
@@ -255,7 +255,7 @@ const int	Index, finalize;
 	  int ssize = SOCKBUFSIZE, rsize = SOCKBUFSIZE;
 	  int setval, setvalsz;
 
-	  Socket = Line->socket;
+	  Socket = Line->socknum;
 
 	  while (ssize > 1024) {
 	    int rc = setsockopt(Socket,SOL_SOCKET,SO_SNDBUF,
@@ -492,9 +492,9 @@ read_passive_tcp_connection()
 		ReasonCode = 2; /* Link is active.. */
 		goto RetryConnection;
 	      } else if (Line->state == TCP_SYNC) {
-		close(Line->socket);
-		Line->socket = -1;
-		Line->socketpending = -1;
+		close(Line->socknum);
+		Line->socknum = -1;
+		Line->socknumpending = -1;
 		logger(1,"UNIX_TCP: read_passive_tcp_connection(%s/%d) -- the other end called us, we quit the active open attempt!, link state was %d\n",
 		       Line->HostName,Index,Line->state);
 		Line->state = LISTEN;
@@ -504,23 +504,23 @@ read_passive_tcp_connection()
 	    }
 	    logger(2,"UNIX_TCP: Acking passive open on line %s/%d\n",
 		   Line->HostName,Index);
-	    if (Line->socket >= 0) {
+	    if (Line->socknum >= 0) {
 	      logger(1,"UNIX_TCP: Passive open came in on line with existing stream! Closing the old one! (%s/%d)\n",
 		     Line->HostName,Index);
-	      close(Line->socket);
+	      close(Line->socknum);
 	    }
 	    
 
 	    /* Copy the parameters from the Accept block,
 	       so we can post a new one */
 	    ASCII_TO_EBCDIC("ACK     ", ControlBlock.type, 8);
-	    Line->socket = -1;
-	    Line->socketpending = -1;
+	    Line->socknum = -1;
+	    Line->socknumpending = -1;
 	    init_link_state(Index);	/* Previous settings so that
 					   init_link_state() won't close
 					   the link right away, but will
 					   init all bits/flags		*/
-	    Line->socket = PassiveReadChannel;
+	    Line->socknum = PassiveReadChannel;
 	    PassiveReadChannel = -1;	/* We've moved it...		*/
 	    Line->state    = DRAIN;	/* Starting in DRAINed state	*/
 
@@ -538,12 +538,12 @@ read_passive_tcp_connection()
 	    trace(&ControlBlock, VMctl_SIZE, 5);
 #endif
 
-	    if (writen(Line->socket, &ControlBlock, VMctl_SIZE) < 0) {
+	    if (writen(Line->socknum, &ControlBlock, VMctl_SIZE) < 0) {
 	      logger(1,"UNIX_TCP: writen() on accept_tcp_connection() failed!");
 	    }
 
 #ifdef	NBSTREAM
-	    setsockblocking(Line->socket,0);
+	    setsockblocking(Line->socknum,0);
 #endif
 
 	    return;
@@ -606,7 +606,7 @@ struct	LINE *line;
 	} else {
 	  /* Not yet full, read something in */
 	  errno = 0;
-	  if ((rsize = read(Line->socket,
+	  if ((rsize = read(Line->socknum,
 			    Line->InBuffer + Line->RecvSize, size)) == -1) {
 	    if (errno == EINTR) {
 	      queue_receive(Index); /* Requeue the read request */
@@ -859,7 +859,7 @@ const int flg;
 
 	do {
 	  errno = 0;
-	  rc = write(Line->socket,Line->WritePending,Line->XmitSize);
+	  rc = write(Line->socknum,Line->WritePending,Line->XmitSize);
 	  if (rc == -1 && errno != EAGAIN &&
 	      errno != EWOULDBLOCK && errno != EINTR) {
 	    logger(1, "UNIX_TCP, tcp_partial_write(): line %s, flg %d error: %s\n",
@@ -991,7 +991,7 @@ const void	*line;
 	expiry.tv_sec += 15;	/* 15 sec expiry.. */
 
 #if	!defined(NBSTREAM)
-	setsockblocking(Line->socket,0);
+	setsockblocking(Line->socknum,0);
 #endif
 
 	do {
@@ -1011,7 +1011,7 @@ const void	*line;
 
 	    struct pollfd pfd;
 	    int sleepmses = timeout.tv_sec * 1000 + timeout.tv_usec/1000;
-	    pfd.fd     = Line->socket;
+	    pfd.fd     = Line->socknum;
 	    pfd.events = POLLOUT;
 	    pfd.revents = 0;
 
@@ -1043,14 +1043,14 @@ const void	*line;
 	       write..  If not, it may take a moment to leave the thing
 	       with a timeout.. */
 
-	    int FdWidth = Line->socket+1;
+	    int FdWidth = Line->socknum+1;
 #ifdef	AIX
-	    FD_SET(Line->socket, &writeds.fdsmask);
+	    FD_SET(Line->socknum, &writeds.fdsmask);
 #else
 #ifdef	FD_SET
-	    FD_SET(Line->socket, &writefds);
+	    FD_SET(Line->socknum, &writefds);
 #else
-	    writefds |= 1 << Line->socket;
+	    writefds |= 1 << Line->socknum;
 #endif
 #endif
 
@@ -1077,7 +1077,7 @@ const void	*line;
 	    int ssize, rsize;
 	    rsize = 0;
 	    if ((ssize = (sizeof(Line->InBuffer) - Line->RecvSize)) > 0) {
-	      rsize = read(Line->socket,
+	      rsize = read(Line->socknum,
 			   &Line->InBuffer[Line->RecvSize], ssize);
 	      if (rsize > 0)
 		/* Ok, we HAVE something in the buffer! */
@@ -1085,7 +1085,7 @@ const void	*line;
 	    }
 	  }
 #endif
-	  rc = write(Line->socket,buf,wsize);
+	  rc = write(Line->socknum,buf,wsize);
 	  if (rc < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
 	    /* How come ?????? */
 	    continue;
@@ -1117,7 +1117,7 @@ const void	*line;
 
 #if	!defined(NBSTREAM)
 	/* Turn off the non-block mode */
-	setsockblocking(Line->socket,1);
+	setsockblocking(Line->socknum,1);
 #endif
 
 	GETTIME(&Line->XmitAge);
@@ -1146,9 +1146,9 @@ void
 close_unix_tcp_channel(Index)
 int	Index;
 {
-	close(IoLines[Index].socket);
-	IoLines[Index].socket = -1;
-	IoLines[Index].socketpending = -1;
+	close(IoLines[Index].socknum);
+	IoLines[Index].socknum = -1;
+	IoLines[Index].socknumpending = -1;
 
 	/* Re-start the channel. */
 	IoLines[Index].state = RETRYING;

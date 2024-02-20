@@ -12,6 +12,7 @@
  | Full rewrite for  FUNET-NJE package, and own `bintree' database by
  | (c) Finnish University and Research Network, FUNET, 1993, 1994.
  */
+#include "headers.h"
 #include "consts.h"
 #include "prototypes.h"
 #include "bintree.h"

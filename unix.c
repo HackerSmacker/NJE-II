@@ -612,34 +612,34 @@ poll_sockets()
 	for (j = 0; j < MAX_LINES; ++j) {
 	  if (IoLines[j].HostName[0] == 0) continue; /* No defined line */
 
-	  if (IoLines[j].socket >= FdWidth)
-	    FdWidth = IoLines[j].socket+1;
+	  if (IoLines[j].socknum >= FdWidth)
+	    FdWidth = IoLines[j].socknum+1;
 	  if ((IoLines[j].state != INACTIVE) &&
 	      (IoLines[j].state != SIGNOFF) &&
 	      (IoLines[j].state != RETRYING) &&
 	      (IoLines[j].state != LISTEN) &&
-	      (IoLines[j].socket >= 0)) {
+	      (IoLines[j].socknum >= 0)) {
 
 #if	defined(NBCONNECT) || defined(NBSTREAM)
 	    /* Can't do connects which take time to finish.. */
 
-	    if (IoLines[j].socketpending >= 0) {
+	    if (IoLines[j].socknumpending >= 0) {
 	      /* A pending open.. */
 
-	      _FD_SET(IoLines[j].socket, writefds);
+	      _FD_SET(IoLines[j].socknum, writefds);
 
 	      has_pending_connects = 1;
 	    } else 
 #endif
 	    {
 	      /* Normal stream, already open */
-	      _FD_SET(IoLines[j].socket, readfds);
+	      _FD_SET(IoLines[j].socknum, readfds);
 	    }
 #if	NBSTREAM
 	    if (IoLines[j].state == ACTIVE) {
 	      if (IoLines[j].WritePending)
 		/* We have a write pedning */
-		_FD_SET(IoLines[j].socket, writefds);
+		_FD_SET(IoLines[j].socknum, writefds);
 
 	      /*
 		 Now THIS is hairy (as if you didn't know it..)
@@ -655,7 +655,7 @@ poll_sockets()
 			((IoLines[j].flags & F_SHUT_PENDING) == 0 &&
 			 (IoLines[j].QueuedFilesWaiting > 0))))
 		/* Or we are expected to call ACK */
-		_FD_SET(IoLines[j].socket, writefds);
+		_FD_SET(IoLines[j].socknum, writefds);
 
 	    }
 #endif	/* NBSTREAM */
@@ -711,18 +711,18 @@ poll_sockets()
 	  FdWidth = 0;
 	  for (j = 0; j < MAX_LINES; ++j)
 	    if (IoLines[j].HostName[0] != 0	&&
-		IoLines[j].socket >= 0		&&
+		IoLines[j].socknum >= 0		&&
 		IoLines[j].WritePending == NULL	&&
 		(IoLines[j].flags & F_CALL_ACK)) {
-	      _FD_SET(IoLines[j].socket, writefds);
-	      if (IoLines[j].socket >= FdWidth)
-		FdWidth = IoLines[j].socket;
+	      _FD_SET(IoLines[j].socknum, writefds);
+	      if (IoLines[j].socknum >= FdWidth)
+		FdWidth = IoLines[j].socknum;
 	    }
 	  nfds = select(FdWidth+1,NULL,&writefds,NULL,&timeout);
 	  for (j = 0; j < MAX_LINES; ++j) {
 	    if (IoLines[j].HostName[0] != 0	&&
-		IoLines[j].socket >= 0		&&
-		_FD_ISSET(IoLines[j].socket, writefds)) {
+		IoLines[j].socknum >= 0		&&
+		_FD_ISSET(IoLines[j].socknum, writefds)) {
 	      IoLines[j].flags &= ~ F_CALL_ACK;
 #ifdef USE_XMIT_QUEUE
 	      dequeue_xmit_queue(j);
@@ -779,24 +779,24 @@ poll_sockets()
 
 	for (j = 0; j < MAX_LINES; ++j)
 	  if (IoLines[j].HostName[0] != 0	&&
-	      IoLines[j].socket >= 0) {
+	      IoLines[j].socknum >= 0) {
 
 	    /* Handle all read-streams -- well, most.. */
 
-	    if (_FD_ISSET(IoLines[j].socket, readfds)) {
+	    if (_FD_ISSET(IoLines[j].socknum, readfds)) {
 	      unix_tcp_receive(j, &IoLines[j]);
 	      done_only_implicitic_ack = 0;
 	    }
 
 	    /* Handle all write-streams */
 
-	    if (IoLines[j].socket >= 0 && /* we may done read() on it and
+	    if (IoLines[j].socknum >= 0 && /* we may done read() on it and
 					     got zero-size packet -> eof.. */
-		_FD_ISSET(IoLines[j].socket, writefds)) {
+		_FD_ISSET(IoLines[j].socknum, writefds)) {
 
 #if	defined(NBSTREAM)||defined(NBCONNECT)
 	      /* Check possible pending sockets.. */
-	      if (IoLines[j].socketpending >= 0) {
+	      if (IoLines[j].socknumpending >= 0) {
 		init_active_tcp_connection(j,1); /* Finalize that open */
 		done_only_implicitic_ack = 0;
 	      } else

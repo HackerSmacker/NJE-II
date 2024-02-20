@@ -29,6 +29,7 @@ Troubleshooting:
 If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care.
 If you cannot get ucp to work, try using a FIFO file. Use mkfifo to create it and update your nje.cf file.
 If you cannot qrdr, make the spool directories. 
+If you cannot compile this on UNIX systems with the acomp compiler, edit headers.h and look for the #pragma pack() lines.
 
 Additional features:
 1. The njemail.sh, which becomes $BINDIR/njemail, will allow you to send a NOTE-style message from UNIX. These notes are readable by both the RDRLIST command on VM and also OfficeVision/PROFS. Upon using Open The Mail on OV/PROFS, the sent message will be imported into the mail server file.

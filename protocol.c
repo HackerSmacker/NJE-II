@@ -163,7 +163,7 @@ const int	Index;
 	  case F_SIGNON_SENT:
 	  case ACTIVE:		/* Restart it and put in DRAIN mode */
 	      Line->state = DRAIN;
-	      if (Line->socket >= 0)
+	      if (Line->socknum >= 0)
 		send_data(Index, &Enquire, sizeof(struct ENQUIRE), SEND_AS_IS);
 	      /* Inform registered users about line being disabled */
 	      if (InformUsersCount > 0) {
@@ -396,7 +396,7 @@ const short	flag;	/* Is this an implicit or explicit ACK? */
 
 	Line = &(IoLines[Index]);
 
-	if (Line->socket < 0) return;	/* Socket had crashed before
+	if (Line->socknum < 0) return;	/* Socket had crashed before
 					   our call happened... */
 
 	Line->errors = 0;		/* Clear error count. */
