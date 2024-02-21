@@ -28,6 +28,7 @@ If you are getting a permission died error using tell or sendfile, make sure tha
 If you cannot get ucp to work, try using a FIFO file. Use mkfifo to create it and update your nje.cf file.
 If you cannot qrdr, make the spool directories. 
 If you cannot compile this on UNIX systems with the acomp compiler, edit headers.h and look for the #pragma pack() lines.
+If you get errors about socket library functions not being found (anything starting with inet or gethostbyname), edit the Makefile and uncomment LIBS.
 
 Additional features:
 1. The njemail.sh, which becomes $BINDIR/njemail, will allow you to send a NOTE-style message from UNIX. These notes are readable by both the RDRLIST command on VM and also OfficeVision/PROFS. Upon using Open The Mail on OV/PROFS, the sent message will be imported into the mail server file.

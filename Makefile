@@ -16,6 +16,9 @@ CFLAGS=-g $(CDEFS)
 RANLIB=ranlib
 INSTALL=install
 
+# Some systems require these:
+#LIBS=-lsocket -lnsl
+
 # chgrp group name:
 NJEGRP=nje
 # Name for the send program (sometimes send is already in use):
@@ -91,12 +94,6 @@ MANSRCS= man/bitspool.5 man/bmail.8 man/ebcdictbl.5			\
 	man/receive.1 man/send.1 man/sendfile.1 man/ucp.8		\
 
 all:	$(PROGRAMS)
-
-info:	njed.info
-dvi:	njed.dvi
-html:	njed.html
-
-.PRECIOUS:	clientlib.a
 
 .c.o:
 	$(CC) -c $(CFLAGS) $<
@@ -388,19 +385,3 @@ unix_route.o:	unix_route.c consts.h site_consts.h prototypes.h bintree.h
 unix_tcp.o:	unix_tcp.c headers.h consts.h site_consts.h prototypes.h
 util.o:		util.c consts.h site_consts.h ebcdic.h prototypes.h bintree.h
 
-njed.info:	njed.texinfo
-	makeinfo njed.texinfo
-
-njed.dvi:	njed.texinfo
-	tex njed.texinfo
-
-njed.html:	njed.texinfo
-	texi2html njed.texinfo
-
-lint:	lintlib
-	lint -hc $(CDEFS) llib-lhuji.ln $(SRC)
-
-lintlib:	llib-lhuji.ln
-
-locktest: locktest.o locks.o
-	$(CC) -o locktest locktest.o locks.o

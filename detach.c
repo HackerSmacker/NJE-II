@@ -15,6 +15,10 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 
+#ifdef __sun
+#include <sys/termios.h>
+#endif
+
 #if	defined(sun) || defined(BSD) || defined(__svr4__)
 #define USE_BSDSETPGRP
 #endif
@@ -74,10 +78,10 @@ detach()
 	}
 #else	/* !_POSIX_SOURCE */
 #ifdef	USE_BSDSETPGRP
-#if	defined(__svr4__) || defined(__DARWIN_UNIX03)
+#if	defined(__svr4__) || defined(__DARWIN_UNIX03) || defined(__sun)
 	setpgrp();
 #else	/* not __svr4__ */
-	(void) setpgrp(0, getpid());	/* change process group */
+	setpgrp(0, getpid());	/* change process group */
 	{
 	  int fd;			/* file descriptor */
 
