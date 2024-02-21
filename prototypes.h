@@ -24,7 +24,7 @@
 # include <memory.h>
 #endif
 #ifdef DIRENTFILE
-# include DIRENTFILE
+#include DIRENTFILE
 #endif
 #include <sys/stat.h>
 #ifdef	AIX
@@ -32,7 +32,31 @@
 #endif /* AIX */
 #include <errno.h>
 #include <pwd.h>
+
+/* utmp choices */
+#ifdef _AIX
+#define UTMP_FILE "/etc/utmp"
+#endif
+#ifdef __gnu_linux__
+#define UTMP_FILE "/var/run/utmp"
+#endif
+#ifdef __FreeBSD__
+#define UTMP_FILE "/var/run/utx.active"
+#define USE_UTMPX
+#endif
+#ifdef __APPLE__
+#define UTMP_FILE "/var/run/utmpx"
+#define USE_UTMPX
+#endif
+#ifdef __bsdi__
+#define UTMP_FILE "/var/run/utmp"
+#endif
+
+#ifdef USE_UTMPX
 #include <utmpx.h>
+#else
+#include <utmp.h>
+#endif
 
 #ifdef	DEBUG_FOPEN
 #define fopen _nje_fopen

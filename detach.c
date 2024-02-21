@@ -8,6 +8,7 @@
  |			ZMailer support library.  Handy.
  */
 
+#include "consts.h"
 #include "prototypes.h"
 #include <signal.h>
 #include <fcntl.h>

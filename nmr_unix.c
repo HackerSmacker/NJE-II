@@ -67,8 +67,10 @@ const char	 cmd;
 	    if (Utmp.ut_type != LOGIN_PROCESS &&
 		Utmp.ut_type != USER_PROCESS) continue;
 #endif
+#ifndef __bsdi__
 	    if (*Utmp.ut_user == 0) continue; /* Try next */
 	    strncpy(uname,Utmp.ut_user,8);
+#endif
 	    uname[8] = 0;
 	    pwd = getpwnam(uname);
 	    if (pwd == NULL) continue;	/* Hmm ??? */

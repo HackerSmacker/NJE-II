@@ -6,7 +6,7 @@
  *
  *	Matti Aarnio <mea@nic.funet.fi>  12-Feb-1991, 26-Sep-1993
  */
-
+#include "consts.h"
 #include "prototypes.h"
 
 # define MAIN -1		/* We compile EBCDIC tables inline */

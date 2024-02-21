@@ -16,7 +16,13 @@
 #include "prototypes.h"
 #include "clientutils.h"
 
-#ifdef AF_UNIX
+#ifdef __bsdi__
+#include <isc/net.h>
+#else
+#include <netinet/in.h>
+#endif
+
+#ifdef UNIX
 #include <sys/un.h>
 #endif
 #include <sysexits.h>

@@ -24,8 +24,10 @@
 #include <unistd.h>
 #include <errno.h>
 
+#ifdef MISSING_SYSNERR
 extern const int sys_nerr;
 extern int errno;
+#endif
 
 /* Some hard-ware dependencies */
 #ifndef __U_INT32
@@ -330,4 +332,4 @@ struct	NMR_MESSAGE {		/* Message */
 			MODIFIER = 0x00 -> user-section
 */
 
-#pragma pack
+#pragma pack(4)
