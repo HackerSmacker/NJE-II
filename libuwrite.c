@@ -7,6 +7,7 @@
  *	Matti Aarnio <mea@nic.funet.fi>  12-Feb-1991, 26-Sep-1993
  */
 
+#include "consts.h"
 #include "headers.h"
 #include "prototypes.h"
 #include "clientutils.h"

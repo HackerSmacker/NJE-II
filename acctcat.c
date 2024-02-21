@@ -3,7 +3,6 @@
    (c) 1993, 1994 Finnish University and Research Network, FUNET
  */
 
-
 #include "prototypes.h"
 #include "rscsacct.h"
 #include "clientutils.h"

@@ -1,3 +1,4 @@
+#include "consts.h"
 #include "prototypes.h"
 #include "clientutils.h"
 

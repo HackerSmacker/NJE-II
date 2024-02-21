@@ -70,7 +70,11 @@ char *msg;
 	cnt = 0;
 
 	while ((m = read(fdutmp, buf, bufsiz)) > 0)  {
+#ifdef USE_UTMPX
 	  m /= sizeof(struct utmpx);
+#else
+	  m /= sizeof(struct utmp);
+#endif
 	  for (i = 0; i < m; i++)   {
 #ifdef USE_UTMPX
 	    struct utmpx *utp = &((struct utmpx*)buf)[i];
@@ -81,10 +85,12 @@ char *msg;
 	    if (utp->ut_type != LOGIN_PROCESS &&
 		utp->ut_type != USER_PROCESS) continue;
 #endif
+#ifndef __bsdi__ /* BSDi BSD/OS has problems with the utmp file being sucky */
 	    if (utp->ut_user[0] == 0)
 	      continue;
 	    if (strncasecmp(user, utp->ut_user,8) != 0)
 	      continue;
+#endif
 	    sprintf(tty, "/dev/%s", utp->ut_line);
 	    alarm_happened = 0;
 	    alarm(10); /* We are fast ? */

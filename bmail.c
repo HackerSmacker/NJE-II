@@ -22,7 +22,7 @@
  | V1.4 - 10-Oct-93 - Teached it to transmit NETDATA
  */
 
-
+#include "consts.h"
 #include "prototypes.h"
 #include "clientutils.h"
 #include "ndlib.h"
