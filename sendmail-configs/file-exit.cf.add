@@ -4,13 +4,11 @@ file-exit.cf  #############################################################
 #
 # ( Note: Alternate way is to run  netinit.sh from CRON )
 
-part of
-
 #
 # NETINIT is pseudo id for automatically re-generating routing tables
 # This is done with  netinit.sh  which must be configured by hand.
 #
-NETINIT  UKSAGE   BITEARN  NODES    *   *   *        *        *   default  RUN  /usr/local/nje/maketable $SPOOL UKSAGE 
+NETINIT  UKSAGE   BITEARN  NODES    *   *   *        *        *   default  RUN  /usr/local/nje/bin/maketable $SPOOL UKSAGE 
 # /usr/local/nje/maketable $SPOOL" 
 #
 # Finally  a `catch them all' default handling case.

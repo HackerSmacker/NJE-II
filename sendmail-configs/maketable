@@ -6,16 +6,16 @@
 #    arrives
 #
 
-NJEDIR=/usr/local/nje/huji
+NJEDIR=/usr/local/nje/
 NJEBINDIR=/usr/local/nje/bin
-PAROUTERDIR=/usr/local/nje/paroute
+PAROUTERDIR=/usr/local/nje/lib/paroute
 
-MFLOG=/usr/tmp/maketable.log
+MFLOG=/usr/local/nje/var/log/maketable.log
 rm $MFLOG
 echo start maketable >> $MFLOG
-TMPFILE=/usr/tmp/maketable.tmp
-TMPFILE1=/usr/tmp/maketablex.tmp
-TMPFILE2=/usr/tmp/maketabley.tmp
+TMPFILE=/usr/local/nje/var/log/maketable.tmp
+TMPFILE1=/usr/local/nje/var/log/maketablex.tmp
+TMPFILE2=/usr/local/nje/var/log/maketabley.tmp
 rm $TMPFILE
 rm $TMPFILE1
 rm $TMPFILE2
@@ -29,7 +29,7 @@ if [ $rc != 0 ]; then
 fi
 
 $NJEDIR/namesfilter -zmailer < $TMPFILE | sort > $TMPFILE2 
-/newsendmail/makemap/makemap dbm /etc/bitnettable < $TMPFILE2
+/newsendmail/makemap/makemap dbm /usr/local/nje/etc/bitnettable < $TMPFILE2
 rc=$?
 
 if [ $rc != 0 ]; then
