@@ -24,7 +24,7 @@
 #include "prototypes.h"
 #include "clientutils.h"
 #include "ndlib.h"
-#include <sysexits.h>
+#include "sysexits.h"
 
 #define	LSIZE	256			/* Maximum line length */
 

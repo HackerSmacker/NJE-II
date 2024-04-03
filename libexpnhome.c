@@ -11,7 +11,7 @@
 #include "prototypes.h"
 #include "clientutils.h"
 
-#include <sysexits.h>
+#include "sysexits.h"
 #include <ctype.h>
 
 /* ExpandHomeDir() -- taken from  unix_files.c -- by <mea@nic.funet.fi> */

@@ -94,11 +94,12 @@ int cc;
 	}
 
 #ifdef UNIX
+#ifndef __INTERIX
 	if (getuid() != 0) { /* NOT started as ROOT ! */
 	  fprintf(stderr,"FUNET-NJE MUST BE STARTED WITH ROOT PRIVILEDGES!  Aborting!\n");
 	  exit(EX_USAGE);
 	}
-
+#endif
 # ifdef PID_FILE
 	{
 	  FILE *PidFil = fopen(PID_FILE,"r");

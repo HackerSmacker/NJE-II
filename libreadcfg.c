@@ -11,7 +11,7 @@
 #include "prototypes.h"
 #include "clientutils.h"
 
-#include <sysexits.h>
+#include "sysexits.h"
 #include <ctype.h>
 
 /* read_configuration() -- reads configuration info */

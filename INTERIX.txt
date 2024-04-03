@@ -1,0 +1,6 @@
+Notes on Interix (the Windows POSIX subsystem):
+
+1. You will get tons of .pdb and .ilk files if you use MSVC. Remove them when you clean.
+2. Use GNU Make (until I can de-crapify the Makefile).
+3. MSVC seems to ignore the #pragma pack directives in headers.h.
+4. Necessary modifications have been made to support GCC 3.3 and 4.24. 

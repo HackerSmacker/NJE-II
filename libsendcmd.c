@@ -25,7 +25,7 @@
 #ifdef UNIX
 #include <sys/un.h>
 #endif
-#include <sysexits.h>
+#include "sysexits.h"
 
 #if 0
 typedef enum { CMD_FIFO, CMD_SOCKET, CMD_UDP, CMD_UNKNOWN } cmdbox_t;

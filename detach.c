@@ -67,6 +67,7 @@ detach()
 	 *	(Must not do a subsequent setpgrp()!)
 	 */
 #ifdef	_POSIX_SOURCE
+#ifndef __INTERIX
 	(void) setsid();
 	{
 	  int fd;			/* file descriptor */
@@ -100,6 +101,7 @@ detach()
 	/* second child */
 #endif	/* USE_BSDSETPGRP */
 #endif	/* !_POSIX_SOURCE */
+#endif	/* not Interix */
 
 out:
 	(void) close(0);

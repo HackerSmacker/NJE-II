@@ -20,6 +20,7 @@
 #include "prototypes.h"
 #include <ctype.h>
 #include "clientutils.h"
+#include <limits.h> /* PATH_MAX */
 
 char LOCAL_NAME   [10];
 char BITNET_QUEUE [80];
@@ -65,7 +66,7 @@ char *dirpath;
 	DIR	*dirfile;
 	DIRENTTYPE *dirp;
 	struct stat fstat;
-	char curdir[MAXPATHLEN];
+	char curdir[PATH_MAX];
 	struct namedate *namedates = NULL;
 	int entryspace = 0;
 	int entrycount = 0;

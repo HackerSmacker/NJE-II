@@ -51,6 +51,10 @@
 #ifdef __bsdi__
 #define UTMP_FILE "/var/run/utmp"
 #endif
+#ifdef __INTERIX
+#define UTMP_FILE "/var/adm/utmpx"
+#define USE_UTMPX
+#endif
 
 #ifdef USE_UTMPX
 #include <utmpx.h>
@@ -107,7 +111,7 @@ extern const int sys_nerr;
 #if	defined(__POSIX_SOURCE) || defined(__POSIX_C_SOURCE) || defined(__svr4__)
 #define GETDTABLESIZE(x) sysconf(_SC_OPEN_MAX)
 #else
-#if	defined(BSD)
+#if	defined(BSD) || defined(__INTERIX)
 #define GETDTABLESIZE(x) getdtablesize()
 #else
 #define GETDTABLESIZE(x) NOFILE
