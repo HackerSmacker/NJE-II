@@ -24,7 +24,7 @@ Enter your node name into `netinit.sh` too, if you wish to use it.
 Note that the `funetnje` executable has been renamed to `njed` to fit UNIX convention.
 
 Troubleshooting:
-If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care.
+If you are getting a permission died error using tell or sendfile, make sure that all files in the /usr/local/nje directory are at least mode 775. Some systems (eg OS X) require you to manually chown the files -- use this with care. The core issue here is that users need to be able to access /usr/local/nje/var/spool/bitnet/USERNAME, and files in the spool/bitnet dir -- without access there, nothing works.
 If you cannot get ucp to work, try using a FIFO file. Use mkfifo to create it and update your nje.cf file.
 If you cannot qrdr, make the spool directories. 
 If you cannot compile this on UNIX systems with the acomp compiler, edit headers.h and look for the #pragma pack() lines.
