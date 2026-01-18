@@ -30,6 +30,10 @@
 #include "headers.h"
 #include "prototypes.h"
 
+#ifdef __gnu_linux__
+#include <time.h>
+#endif
+
 #ifdef USE_XMIT_QUEUE
 void queue_timer_reset(int expiration, int Index, TimerType WhatToDo);
 #endif

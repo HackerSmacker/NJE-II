@@ -21,6 +21,9 @@
  */
 #include <stdio.h>
 #include <sys/types.h>
+#ifdef __gnu_linux__
+#include <time.h>
+#endif
 #include <errno.h>
 #include <sys/stat.h>
 #ifndef UNIX
@@ -215,7 +218,7 @@ init_command_mailbox()
 	  sscanf(socknam,"%*s %d", &portnum);
 	  SocketName.sin_port = htons(portnum);
 
-	  if (bind(CommandSocket, &SocketName, sizeof(SocketName)) == -1) {
+	  if (bind(CommandSocket, (const struct sockaddr*) &SocketName, sizeof(SocketName)) == -1) {
 	    logger(1, "UNIX, Can't bind command socket '%s', error: %s\n",
 		   socknam, PRINT_ERRNO);
 	    exit(1);

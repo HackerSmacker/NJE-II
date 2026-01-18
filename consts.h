@@ -135,8 +135,7 @@ extern int	errno;
 #define	EXTERNAL	extern
 #endif
 
-extern int MAX_LINES;
-INTERNAL int	MAX_LINES;		/* Dynamic! [mea]		*/
+EXTERNAL int	MAX_LINES;		/* Dynamic! [mea]		*/
 #ifdef MAIN
 INTERNAL char	BITNET_QUEUE[80];	/* The BITnet queue directory	*/
 INTERNAL char   COMMAND_MAILBOX[80];	/* The command channel		*/
